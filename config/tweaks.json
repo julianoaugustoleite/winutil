@@ -1,6 +1,6 @@
 {
   "WPFTweaksActivity": {
-    "Content": "Disable Activity History",
+    "Content": "Desativar historico de atividades",
     "Description": "Erases recent docs, clipboard, and run history.",
     "category": "Essential Tweaks",
     "panel": "1",
@@ -30,7 +30,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/activity"
   },
   "WPFTweaksHiber": {
-    "Content": "Disable Hibernation",
+    "Content": "Desativar hibernacao",
     "Description": "Hibernation is really meant for laptops as it saves what's in memory before turning the PC off. It really should never be used.",
     "category": "Essential Tweaks",
     "panel": "1",
@@ -59,7 +59,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/hiber"
   },
   "WPFTweaksWidget": {
-    "Content": "Remove Widgets",
+    "Content": "Remover widgets",
     "Description": "Removes the annoying widgets in the bottom left of the Taskbar.",
     "category": "Essential Tweaks",
     "panel": "1",
@@ -88,7 +88,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/widget"
   },
   "WPFTweaksRevertStartMenu": {
-    "Content": "Revert the new start menu",
+    "Content": "Reverter o novo menu Iniciar",
     "Description": "Uses vivetool to revert to the original start menu from 24H2.",
     "category": "z__Advanced Tweaks - CAUTION",
     "panel": "1",
@@ -123,7 +123,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/revertstartmenu"
   },
   "WPFTweaksLocation": {
-    "Content": "Disable Location Tracking",
+    "Content": "Desativar rastreamento de localizacao",
     "Description": "Disables Location Tracking.",
     "category": "Essential Tweaks",
     "panel": "1",
@@ -160,7 +160,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/location"
   },
   "WPFTweaksServices": {
-    "Content": "Set Services to Manual",
+    "Content": "Definir servicos como manuais",
     "Description": "Turns a bunch of system services to manual that don't need to be running all the time. This is pretty harmless as if the service is needed, it will simply start on demand.",
     "category": "Essential Tweaks",
     "panel": "1",
@@ -1289,7 +1289,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/edgedebloat"
   },
   "WPFTweaksConsumerFeatures": {
-    "Content": "Disable ConsumerFeatures",
+    "Content": "Desativar recursos do consumidor",
     "Description": "Windows will not automatically install any games, third-party apps, or application links from the Windows Store for the signed-in user. Some default Apps will be inaccessible (eg. Phone Link).",
     "category": "Essential Tweaks",
     "panel": "1",
@@ -1305,7 +1305,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/consumerfeatures"
   },
   "WPFTweaksTelemetry": {
-    "Content": "Disable Telemetry",
+    "Content": "Desativar telemetria",
     "Description": "Disables Microsoft Telemetry.",
     "category": "Essential Tweaks",
     "panel": "1",
@@ -1427,7 +1427,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/telemetry"
   },
   "WPFTweaksRemoveEdge": {
-    "Content": "Remove Microsoft Edge",
+    "Content": "Remover o Microsoft Edge",
     "Description": "Unblocks Microsoft Edge uninstaller restrictions then uses that uninstaller to remove Microsoft Edge.",
     "category": "z__Advanced Tweaks - CAUTION",
     "panel": "1",
@@ -1443,7 +1443,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/removeedge"
   },
   "WPFTweaksUTC": {
-    "Content": "Set Time to UTC (Dual Boot)",
+    "Content": "Configurar hora para UTC (Dual Boot)",
     "Description": "Essential for computers that are dual booting. Fixes the time sync with Linux Systems.",
     "category": "z__Advanced Tweaks - CAUTION",
     "panel": "1",
@@ -1459,7 +1459,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/utc"
   },
   "WPFTweaksRemoveOneDrive": {
-    "Content": "Remove OneDrive",
+    "Content": "Remover OneDrive",
     "Description": "Denies permission to remove OneDrive user files, then uses its own uninstaller to remove it and restores the original permission afterward.",
     "category": "z__Advanced Tweaks - CAUTION",
     "panel": "1",
@@ -1496,7 +1496,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/removeonedrive"
   },
   "WPFTweaksRemoveHome": {
-    "Content": "Remove Home from Explorer",
+    "Content": "Remover a pagina inicial do Explorer",
     "Description": "Removes the Home from Explorer and sets This PC as default.",
     "category": "z__Advanced Tweaks - CAUTION",
     "panel": "1",
@@ -1515,7 +1515,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/removehome"
   },
   "WPFTweaksRemoveGallery": {
-    "Content": "Remove Gallery from explorer",
+    "Content": "Remover Galeria do explorador",
     "Description": "Removes the Gallery from Explorer and sets This PC as default.",
     "category": "z__Advanced Tweaks - CAUTION",
     "panel": "1",
@@ -1532,7 +1532,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/removegallery"
   },
   "WPFTweaksDisplay": {
-    "Content": "Set Display for Performance",
+    "Content": "Definir exibicao para desempenho",
     "Description": "Sets the system preferences to performance. You can do this manually with sysdm.cpl as well.",
     "category": "z__Advanced Tweaks - CAUTION",
     "panel": "1",
@@ -1631,7 +1631,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/display"
   },
   "WPFTweaksXboxRemoval": {
-    "Content": "Remove Xbox & Gaming Components",
+    "Content": "Remova o Xbox e os componentes de jogos.",
     "Description": "Removes Xbox services, the Xbox app, Game Bar, and related authentication components.",
     "category": "z__Advanced Tweaks - CAUTION",
     "panel": "1",
@@ -1645,7 +1645,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/xboxremoval"
   },
   "WPFTweaksDeBloat": {
-    "Content": "Remove ALL MS Store Apps - NOT RECOMMENDED",
+    "Content": "Remover TODOS os aplicativos da Microsoft Store - NAO RECOMENDADO",
     "Description": "USE WITH CAUTION!!! This will remove ALL Microsoft Store apps.",
     "category": "z__Advanced Tweaks - CAUTION",
     "panel": "1",
@@ -1734,7 +1734,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/debloat"
   },
   "WPFTweaksRestorePoint": {
-    "Content": "Create Restore Point",
+    "Content": "Criar ponto de restauracao",
     "Description": "Creates a restore point at runtime in case a revert is needed from WinUtil modifications.",
     "category": "Essential Tweaks",
     "panel": "1",
@@ -1761,7 +1761,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/restorepoint"
   },
   "WPFTweaksEndTaskOnTaskbar": {
-    "Content": "Enable End Task With Right Click",
+    "Content": "Ativar a opcao Finalizar tarefa com o botao direito do mouse",
     "Description": "Enables option to end task when right clicking a program in the taskbar.",
     "category": "Essential Tweaks",
     "panel": "1",
@@ -1777,7 +1777,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/endtaskontaskbar"
   },
   "WPFTweaksPowershell7Tele": {
-    "Content": "Disable Powershell 7 Telemetry",
+    "Content": "Desativar a telemetria do PowerShell 7",
     "Description": "Creates an Environment Variable called 'POWERSHELL_TELEMETRY_OPTOUT' with a value of '1' which will tell PowerShell 7 to not send Telemetry Data.",
     "category": "Essential Tweaks",
     "panel": "1",
@@ -1790,7 +1790,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/powershell7tele"
   },
   "WPFTweaksStorage": {
-    "Content": "Disable Storage Sense",
+    "Content": "Desativar sensor de armazenamento",
     "Description": "Storage Sense deletes temp files automatically.",
     "category": "z__Advanced Tweaks - CAUTION",
     "panel": "1",
@@ -1806,7 +1806,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/storage"
   },
   "WPFTweaksRemoveCopilot": {
-    "Content": "Disable Microsoft Copilot",
+    "Content": "Desabilitar o Microsoft Copilot",
     "Description": "Disables MS Copilot AI built into Windows since 23H2.",
     "category": "z__Advanced Tweaks - CAUTION",
     "panel": "1",
@@ -1890,7 +1890,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/removecopilot"
   },
   "WPFTweaksWPBT": {
-    "Content": "Disable Windows Platform Binary Table (WPBT)",
+    "Content": "Desativar a Tabela Binaria da Plataforma Windows (WPBT)",
     "Description": "If enabled, WPBT allows your computer vendor to execute programs at boot time, such as anti-theft software, software drivers, as well as force install software without user consent. Poses potential security risk.",
     "category": "Essential Tweaks",
     "panel": "1",
@@ -1906,7 +1906,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/wpbt"
   },
   "WPFTweaksRazerBlock": {
-    "Content": "Block Razer Software Installs",
+    "Content": "Bloquear instalacoes de software da Razer",
     "Description": "Blocks ALL Razer Software installations. The hardware works fine without any software.",
     "category": "z__Advanced Tweaks - CAUTION",
     "panel": "1",
@@ -1948,7 +1948,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/razerblock"
   },
   "WPFTweaksDisableNotifications": {
-    "Content": "Disable Notification Tray/Calendar",
+    "Content": "Desativar a bandeja de notificacoes/calendario",
     "Description": "Disables all Notifications INCLUDING Calendar.",
     "category": "z__Advanced Tweaks - CAUTION",
     "panel": "1",
@@ -1971,7 +1971,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/disablenotifications"
   },
   "WPFTweaksBlockAdobeNet": {
-    "Content": "Adobe Network Block",
+    "Content": "Bloco de rede Adobe",
     "Description": "Reduces user interruptions by selectively blocking connections to Adobe's activation and telemetry servers. Credit: Ruddernation-Designs",
     "category": "z__Advanced Tweaks - CAUTION",
     "panel": "1",
@@ -2001,7 +2001,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/blockadobenet"
   },
   "WPFTweaksRightClickMenu": {
-    "Content": "Set Classic Right-Click Menu",
+    "Content": "Configurar menu classico de contexto (clique com o botao direito do mouse)",
     "Description": "Restores the classic context menu when right-clicking in File Explorer, replacing the simplified Windows 11 version.",
     "category": "z__Advanced Tweaks - CAUTION",
     "panel": "1",
@@ -2023,7 +2023,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/rightclickmenu"
   },
   "WPFTweaksDiskCleanup": {
-    "Content": "Run Disk Cleanup",
+    "Content": "Execute a limpeza de disco",
     "Description": "Runs Disk Cleanup on Drive C: and removes old Windows Updates.",
     "category": "Essential Tweaks",
     "panel": "1",
@@ -2036,7 +2036,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/diskcleanup"
   },
   "WPFTweaksDeleteTempFiles": {
-    "Content": "Delete Temporary Files",
+    "Content": "Excluir arquivos temporarios",
     "Description": "Erases TEMP Folders.",
     "category": "Essential Tweaks",
     "panel": "1",
@@ -2049,7 +2049,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/deletetempfiles"
   },
   "WPFTweaksIPv46": {
-    "Content": "Prefer IPv4 over IPv6",
+    "Content": "Prefira IPv4 a IPv6",
     "Description": "Setting the IPv4 preference can have latency and security benefits on private networks where IPv6 is not configured.",
     "category": "z__Advanced Tweaks - CAUTION",
     "panel": "1",
@@ -2065,7 +2065,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/ipv46"
   },
   "WPFTweaksTeredo": {
-    "Content": "Disable Teredo",
+    "Content": "Desativar Teredo",
     "Description": "Teredo network tunneling is a IPv6 feature that can cause additional latency, but may cause problems with some games.",
     "category": "z__Advanced Tweaks - CAUTION",
     "panel": "1",
@@ -2087,7 +2087,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/teredo"
   },
   "WPFTweaksDisableIPv6": {
-    "Content": "Disable IPv6",
+    "Content": "Desativar IPv6",
     "Description": "Disables IPv6.",
     "category": "z__Advanced Tweaks - CAUTION",
     "panel": "1",
@@ -2109,7 +2109,8 @@
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/disableipv6"
   },
   "WPFTweaksDisableBGapps": {
-    "Content": "Disable Background Apps",
+    "Content": "Desative Apps em segundo plano
+",
     "Description": "Disables all Microsoft Store apps from running in the background, which has to be done individually since Windows 11.",
     "category": "z__Advanced Tweaks - CAUTION",
     "panel": "1",
@@ -2125,7 +2126,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/disablebgapps"
   },
   "WPFTweaksDisableFSO": {
-    "Content": "Disable Fullscreen Optimizations",
+    "Content": "Desativar otimizacoes de tela cheia",
     "Description": "Disables FSO in all applications. NOTE: This will disable Color Management in Exclusive Fullscreen.",
     "category": "z__Advanced Tweaks - CAUTION",
     "panel": "1",
@@ -2141,7 +2142,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/disablefso"
   },
   "WPFToggleDarkMode": {
-    "Content": "Dark Theme for Windows",
+    "Content": "Tema Dark para Windows",
     "Description": "Enable/Disable Dark Mode.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2183,7 +2184,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/darkmode"
   },
   "WPFToggleBingSearch": {
-    "Content": "Bing Search in Start Menu",
+    "Content": "Pesquisa do Bing no menu Iniciar",
     "Description": "If enabled, Bing web search results will be included in your Start Menu search.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2201,7 +2202,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/bingsearch"
   },
   "WPFToggleStandbyFix": {
-    "Content": "Modern Standby fix",
+    "Content": "Correcao de espera moderna",
     "Description": "Disable network connection during S0 sleep. If network connectivity is turned on during S0 sleep it could cause overheating on modern laptops",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2219,7 +2220,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/standbyfix"
   },
   "WPFToggleNumLock": {
-    "Content": "Num Lock on Startup",
+    "Content": "Num Lock na inicializacao",
     "Description": "Toggle the Num Lock key state when your computer starts.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2245,7 +2246,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/numlock"
   },
   "WPFToggleVerboseLogon": {
-    "Content": "Verbose Messages During Logon",
+    "Content": "Mensagens detalhadas durante o login",
     "Description": "Show detailed messages during the login process for troubleshooting and diagnostics.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2263,7 +2264,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/verboselogon"
   },
   "WPFToggleStartMenuRecommendations": {
-    "Content": "Recommendations in Start Menu",
+    "Content": "Recomendacoes no Menu Iniciar",
     "Description": "If disabled, then you will not see recommendations in the Start Menu. WARNING: This will also disable Windows Spotlight on your Lock Screen as a side effect.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2307,7 +2308,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/startmenurecommendations"
   },
   "WPFToggleHideSettingsHome": {
-    "Content": "Remove Settings Home Page",
+    "Content": "Remover pagina inicial de configuracoes",
     "Description": "Removes the Home Page in the Windows Settings app.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2325,7 +2326,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/hidesettingshome"
   },
   "WPFToggleMouseAcceleration": {
-    "Content": "Mouse Acceleration",
+    "Content": "Aceleracao do mouse",
     "Description": "If enabled, the Cursor movement is affected by the speed of your physical mouse movements.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2359,7 +2360,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/mouseacceleration"
   },
   "WPFToggleStickyKeys": {
-    "Content": "Sticky Keys",
+    "Content": "Chaves adesivas",
     "Description": "If enabled, Sticky Keys is activated. Sticky keys is an accessibility feature of some graphical user interfaces which assists users who have physical disabilities or help users reduce repetitive strain injury.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2419,7 +2420,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/newoutlook"
   },
   "WPFToggleMultiplaneOverlay": {
-    "Content": "Disable Multiplane Overlay",
+    "Content": "Desativar sobreposicao multiplano",
     "Description": "Disable the Multiplane Overlay which can sometimes cause issues with Graphics Cards.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2437,7 +2438,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/multiplaneoverlay"
   },
   "WPFToggleHiddenFiles": {
-    "Content": "Show Hidden Files",
+    "Content": "Mostrar arquivos ocultos",
     "Description": "If enabled, Hidden Files will be shown.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2465,7 +2466,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/hiddenfiles"
   },
   "WPFToggleShowExt": {
-    "Content": "Show File Extensions",
+    "Content": "Mostrar extensoes de arquivo",
     "Description": "If enabled, File extensions (e.g., .txt, .jpg) are visible.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2493,7 +2494,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/showext"
   },
   "WPFToggleTaskbarSearch": {
-    "Content": "Search Button in Taskbar",
+    "Content": "Botao de pesquisa na barra de tarefas",
     "Description": "If enabled, Search Button will be on the Taskbar.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2511,7 +2512,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/taskbarsearch"
   },
   "WPFToggleTaskView": {
-    "Content": "Task View Button in Taskbar",
+    "Content": "Botao de visualizacao de tarefas na barra de tarefas",
     "Description": "If enabled, Task View Button in Taskbar will be shown.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2529,7 +2530,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/taskview"
   },
   "WPFToggleTaskbarAlignment": {
-    "Content": "Center Taskbar Items",
+    "Content": "Itens da barra de tarefas centralizados",
     "Description": "[Windows 11] If enabled, the Taskbar Items will be shown on the Center, otherwise the Taskbar Items will be shown on the Left.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2557,7 +2558,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/taskbaralignment"
   },
   "WPFToggleDetailedBSoD": {
-    "Content": "Detailed BSoD",
+    "Content": "BSoD detalhado",
     "Description": "If enabled, you will see a detailed Blue Screen of Death (BSOD) with more information.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2616,7 +2617,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/changedns"
   },
   "WPFAddUltPerf": {
-    "Content": "Add and Activate Ultimate Performance Profile",
+    "Content": "Adicione e ative o Perfil de Desempenho Maximo",
     "category": "Performance Plans",
     "panel": "2",
     "Type": "Button",
@@ -2624,7 +2625,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/performance-plans/addultperf"
   },
   "WPFRemoveUltPerf": {
-    "Content": "Remove Ultimate Performance Profile",
+    "Content": "Remover perfil de desempenho final",
     "category": "Performance Plans",
     "panel": "2",
     "Type": "Button",
@@ -2632,7 +2633,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/performance-plans/removeultperf"
   },
   "WPFTweaksDisableExplorerAutoDiscovery": {
-    "Content": "Disable Explorer Automatic Folder Discovery",
+    "Content": "Desativar a descoberta automatica de pastas no Explorador de Arquivos",
     "Description": "Windows Explorer automatically tries to guess the type of the folder based on its contents, slowing down the browsing experience. WARNING! Will disable File Explorer grouping.",
     "category": "Essential Tweaks",
     "panel": "1",
@@ -2687,7 +2688,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/disableexplorerautodiscovery"
   },
   "WPFToggleDisableCrossDeviceResume": {
-    "Content": "Cross-Device Resume",
+    "Content": "Retomar em varios dispositivos",
     "Description": "This tweak controls the Resume function in Windows 11 24H2 and later, which allows you to resume an activity from a mobile device and vice-versa.",
     "category": "Customize Preferences",
     "panel": "2",

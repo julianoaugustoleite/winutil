@@ -2,7 +2,7 @@
     "1password": {
         "category": "Utilities",
         "choco": "1password",
-        "content": "1Password",
+        "content": "1Senha",
         "description": "1Password is a password manager that allows you to store and manage your passwords securely.",
         "link": "https://1password.com/",
         "winget": "AgileBits.1Password"
@@ -27,7 +27,7 @@
     "advancedip": {
         "category": "Pro Tools",
         "choco": "advanced-ip-scanner",
-        "content": "Advanced IP Scanner",
+        "content": "Scanner IP avançado",
         "description": "Advanced IP Scanner is a fast and easy-to-use network scanner. It is designed to analyze LAN networks and provides information about connected devices.",
         "link": "https://www.advanced-ip-scanner.com/",
         "winget": "Famatech.AdvancedIPScanner"
