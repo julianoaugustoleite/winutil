@@ -57,7 +57,7 @@ url = "https://github.com/christitustech/Winutil"
   icon = "github"
 
 [params]
-description = "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates"
+description = "BM Infotech Windows Utility - Install Programs, Tweaks, Fixes, and Updates"
 displayUpdatedDate = true
 dateFormat = "January 2, 2006"
 

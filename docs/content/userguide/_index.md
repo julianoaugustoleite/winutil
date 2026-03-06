@@ -7,7 +7,7 @@ Welcome to the official User Guide for **Winutil**, your all-in-one Windows tool
 
 ## What is Winutil?
 
-Winutil (Chris Titus Tech's Windows Utility) is a comprehensive PowerShell-based tool that helps you:
+Winutil (BM Infotech Windows Utility) is a comprehensive PowerShell-based tool that helps you:
 
 - **Install Applications**: Quickly install popular software without manual downloads
 - **Apply Tweaks**: Optimize Windows for performance, privacy, and usability
