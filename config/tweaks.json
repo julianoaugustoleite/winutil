@@ -62,7 +62,7 @@
     "Content": "Remove Widgets",
     "Description": "Removes the annoying widgets in the bottom left of the Taskbar.",
     "category": "Essential Tweaks",
-    "panel": "1",
+    "panel": "9",
     "InvokeScript": [
       "
       # Sometimes if you dont stop the Widgets process the removal may fail
@@ -126,7 +126,7 @@
     "Content": "Disable Microsoft Store search results",
     "Description": "Will not display recommended Microsoft Store apps when searching for apps in the Start menu.",
     "category": "Essential Tweaks",
-    "panel": "1",
+    "panel": "9",
     "InvokeScript": [
       "icacls \"$Env:LocalAppData\\Packages\\Microsoft.WindowsStore_8wekyb3d8bbwe\\LocalState\\store.db\" /deny Everyone:F"
     ],
@@ -1443,7 +1443,7 @@
     "Content": "Remove Microsoft Edge",
     "Description": "Unblocks Microsoft Edge uninstaller restrictions then uses that uninstaller to remove Microsoft Edge.",
     "category": "z__Advanced Tweaks - CAUTION",
-    "panel": "1",
+    "panel": "9",
     "InvokeScript": [
       "Invoke-WinUtilRemoveEdge"
     ],
@@ -1512,7 +1512,7 @@
     "Content": "Remove Home from Explorer",
     "Description": "Removes the Home from Explorer and sets This PC as default.",
     "category": "z__Advanced Tweaks - CAUTION",
-    "panel": "1",
+    "panel": "9",
     "InvokeScript": [
       "
       Remove-Item \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}\"
@@ -1531,7 +1531,7 @@
     "Content": "Remove Gallery from explorer",
     "Description": "Removes the Gallery from Explorer and sets This PC as default.",
     "category": "z__Advanced Tweaks - CAUTION",
-    "panel": "1",
+    "panel": "9",
     "InvokeScript": [
       "
       Remove-Item \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}\"
@@ -1548,7 +1548,7 @@
     "Content": "Set Display for Performance",
     "Description": "Sets the system preferences to performance. You can do this manually with sysdm.cpl as well.",
     "category": "z__Advanced Tweaks - CAUTION",
-    "panel": "1",
+    "panel": "9",
     "registry": [
       {
         "Path": "HKCU:\\Control Panel\\Desktop",
@@ -1670,7 +1670,7 @@
     "Content": "Remove ALL MS Store Apps - NOT RECOMMENDED",
     "Description": "USE WITH CAUTION!!! This will remove ALL Microsoft Store apps.",
     "category": "z__Advanced Tweaks - CAUTION",
-    "panel": "1",
+    "panel": "9",
     "appx": [
       "Microsoft.Microsoft3DViewer",
       "Microsoft.AppConnector",
@@ -1759,7 +1759,7 @@
     "Content": "Create Restore Point",
     "Description": "Creates a restore point at runtime in case a revert is needed from WinUtil modifications.",
     "category": "Essential Tweaks",
-    "panel": "1",
+    "panel": "9",
     "Checked": "False",
     "registry": [
       {
@@ -1815,7 +1815,7 @@
     "Content": "Disable Storage Sense",
     "Description": "Storage Sense deletes temp files automatically.",
     "category": "z__Advanced Tweaks - CAUTION",
-    "panel": "1",
+    "panel": "9",
     "registry": [
       {
         "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\StorageSense\\Parameters\\StoragePolicy",
@@ -1931,7 +1931,7 @@
     "Content": "Block Razer Software Installs",
     "Description": "Blocks ALL Razer Software installations. The hardware works fine without any software.",
     "category": "z__Advanced Tweaks - CAUTION",
-    "panel": "1",
+    "panel": "9",
     "registry": [
       {
         "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DriverSearching",
@@ -2061,7 +2061,7 @@
     "Content": "Delete Temporary Files",
     "Description": "Erases TEMP Folders.",
     "category": "Essential Tweaks",
-    "panel": "1",
+    "panel": "9",
     "InvokeScript": [
       "
       Remove-Item -Path \"$Env:Temp\\*\" -Recurse -Force
@@ -2150,7 +2150,7 @@
     "Content": "Disable Fullscreen Optimizations",
     "Description": "Disables FSO in all applications. NOTE: This will disable Color Management in Exclusive Fullscreen.",
     "category": "z__Advanced Tweaks - CAUTION",
-    "panel": "1",
+    "panel": "9",
     "registry": [
       {
         "Path": "HKCU:\\System\\GameConfigStore",

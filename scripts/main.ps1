@@ -144,10 +144,10 @@ $sync.Form.Add_Loaded({
             [ref]$handled
         )
         # Check for the Event WM_SETTINGCHANGE (0x1001A) and validate that Button shows the icon for "Auto" => [char]0xF08C
-        if (($msg -eq 0x001A) -and $sync.ThemeButton.Content -eq [char]0xF08C) {
+        if ($mg -eq 0x001Ae) {
             $currentTime = [datetime]::Now
             if ($currentTime - $lastThemeChangeTime -gt $debounceInterval) {
-                Invoke-WinutilThemeChange -theme "Auto"
+                Invoke-WinutilThemeChange -theme "Dark"
                 $script:lastThemeChangeTime = $currentTime
                 $handled = $true
             }
@@ -156,7 +156,7 @@ $sync.Form.Add_Loaded({
     })
 })
 
-Invoke-WinutilThemeChange -theme $sync.preferences.theme
+Invoke-WinutilThemeChange -theme "Dark"
 
 
 # Now call the function with the final merged config
@@ -303,7 +303,7 @@ $commonKeyEvents = {
 $sync["Form"].Add_PreViewKeyDown($commonKeyEvents)
 
 $sync["Form"].Add_MouseLeftButtonDown({
-    Invoke-WPFPopup -Action "Hide" -Popups @("Settings", "Theme", "FontScaling")
+    Invoke-WPFPopup -Action "Hide" -Popups @("Settings", "FontScaling")
     $sync["Form"].DragMove()
 })
 
@@ -321,7 +321,7 @@ $sync["Form"].Add_MouseDoubleClick({
 
 $sync["Form"].Add_Deactivated({
     Write-Debug "WinUtil lost focus"
-    Invoke-WPFPopup -Action "Hide" -Popups @("Settings", "Theme", "FontScaling")
+    Invoke-WPFPopup -Action "Hide" -Popups @("Settings", "FontScaling")
 })
 
 $sync["Form"].Add_ContentRendered({
@@ -448,29 +448,10 @@ $sync["Form"].Add_Activated({
     Set-WinUtilTaskbaritem -overlay "logo"
 })
 
-$sync["ThemeButton"].Add_Click({
-    Write-Debug "ThemeButton clicked"
-    Invoke-WPFPopup -PopupActionTable @{ "Settings" = "Hide"; "Theme" = "Toggle"; "FontScaling" = "Hide" }
-})
-$sync["AutoThemeMenuItem"].Add_Click({
-    Write-Debug "About clicked"
-    Invoke-WPFPopup -Action "Hide" -Popups @("Theme")
-    Invoke-WinutilThemeChange -theme "Auto"
-})
-$sync["DarkThemeMenuItem"].Add_Click({
-    Write-Debug "Dark Theme clicked"
-    Invoke-WPFPopup -Action "Hide" -Popups @("Theme")
-    Invoke-WinutilThemeChange -theme "Dark"
-})
-$sync["LightThemeMenuItem"].Add_Click({
-    Write-Debug "Light Theme clicked"
-    Invoke-WPFPopup -Action "Hide" -Popups @("Theme")
-    Invoke-WinutilThemeChange -theme "Light"
-})
 
 $sync["SettingsButton"].Add_Click({
     Write-Debug "SettingsButton clicked"
-    Invoke-WPFPopup -PopupActionTable @{ "Settings" = "Toggle"; "Theme" = "Hide"; "FontScaling" = "Hide" }
+    Invoke-WPFPopup -PopupActionTable @{ "Settings" = "Toggle"; "FontScaling" = "Hide" }
 })
 $sync["ImportMenuItem"].Add_Click({
     Write-Debug "Import clicked"
@@ -487,42 +468,19 @@ $sync["AboutMenuItem"].Add_Click({
     Invoke-WPFPopup -Action "Hide" -Popups @("Settings")
 
     $authorInfo = @"
-Author   : <a href="https://github.com/ChrisTitusTech">@ChrisTitusTech</a>
-UI       : <a href="https://github.com/MyDrift-user">@MyDrift-user</a>, <a href="https://github.com/Marterich">@Marterich</a>
-Runspace : <a href="https://github.com/DeveloperDurp">@DeveloperDurp</a>, <a href="https://github.com/Marterich">@Marterich</a>
-GitHub   : <a href="https://github.com/ChrisTitusTech/winutil">ChrisTitusTech/winutil</a>
-Version  : <a href="https://github.com/ChrisTitusTech/winutil/releases/tag/$($sync.version)">$($sync.version)</a>
-"@
-    Show-CustomDialog -Title "About" -Message $authorInfo
-})
-$sync["DocumentationMenuItem"].Add_Click({
-    Write-Debug "Documentation clicked"
-    Invoke-WPFPopup -Action "Hide" -Popups @("Settings")
-    Start-Process "https://winutil.christitus.com/"
-})
-$sync["SponsorMenuItem"].Add_Click({
-    Write-Debug "Sponsors clicked"
-    Invoke-WPFPopup -Action "Hide" -Popups @("Settings")
+BM Infotech Windows Toolbox
 
-    $authorInfo = @"
-<a href="https://github.com/sponsors/ChrisTitusTech">Current sponsors for ChrisTitusTech:</a>
+Empresa  : <a href="https://www.bminfotech.com.br">www.bminfotech.com.br</a>
+GitHub   : <a href="https://github.com/julianoaugustoleite/winutil">julianoaugustoleite/winutil</a>
+Versao   : $($sync.version)
 "@
-    $authorInfo += "`n"
-    try {
-        $sponsors = Invoke-WinUtilSponsors
-        foreach ($sponsor in $sponsors) {
-            $authorInfo += "<a href=`"https://github.com/sponsors/ChrisTitusTech`">$sponsor</a>`n"
-        }
-    } catch {
-        $authorInfo += "An error occurred while fetching or processing the sponsors: $_`n"
-    }
-    Show-CustomDialog -Title "Sponsors" -Message $authorInfo -EnableScroll $true
+    Show-CustomDialog -Title "Sobre a BM Infotech" -Message $authorInfo
 })
 
 # Font Scaling Event Handlers
 $sync["FontScalingButton"].Add_Click({
     Write-Debug "FontScalingButton clicked"
-    Invoke-WPFPopup -PopupActionTable @{ "Settings" = "Hide"; "Theme" = "Hide"; "FontScaling" = "Toggle" }
+    Invoke-WPFPopup -PopupActionTable @{ "Settings" = "Hide"; "FontScaling" = "Toggle" }
 })
 
 $sync["FontScalingSlider"].Add_ValueChanged({

@@ -1,8 +1,8 @@
 <#
 .NOTES
-    Author         : Chris Titus @christitustech
-    Runspace Author: @DeveloperDurp
-    GitHub         : https://github.com/ChrisTitusTech
+    Author         : BM Infotech
+    Runspace Author: @brunomonteirobm_
+    GitHub         : https://www.bminfotech.com.br/
     Version        : #{replaceme}
 #>
 

@@ -1045,43 +1045,8 @@
 
                 <!-- Buttons Container -->
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5,5,5,5">
-                    <Button Name="ThemeButton"
-                        Style="{StaticResource HoverButtonStyle}"
-                        BorderBrush="Transparent"
-                    Background="{DynamicResource MainBackgroundColor}"
-                    Foreground="{DynamicResource MainForegroundColor}"
-                    FontSize="{DynamicResource SettingsIconFontSize}"
-                    Width="{DynamicResource IconButtonSize}" Height="{DynamicResource IconButtonSize}"
-                    HorizontalAlignment="Right" VerticalAlignment="Top"
-                    Margin="0,0,2,0"
-                    FontFamily="Segoe MDL2 Assets"
-                    Content="N/A"
-                    ToolTip="Change the Winutil UI Theme"
-                />
-                    <Popup Name="ThemePopup"
-                    IsOpen="False"
-                    PlacementTarget="{Binding ElementName=ThemeButton}" Placement="Bottom"
-                    HorizontalAlignment="Right" VerticalAlignment="Top">
-                    <Border Background="{DynamicResource MainBackgroundColor}" BorderBrush="{DynamicResource MainForegroundColor}" BorderThickness="1" CornerRadius="0" Margin="0">
-                        <StackPanel Background="{DynamicResource MainBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <MenuItem FontSize="{DynamicResource ButtonFontSize}" Header="Auto" Name="AutoThemeMenuItem" Foreground="{DynamicResource MainForegroundColor}">
-                                <MenuItem.ToolTip>
-                                    <ToolTip Content="Follow the Windows Theme"/>
-                                </MenuItem.ToolTip>
-                            </MenuItem>
-                            <MenuItem FontSize="{DynamicResource ButtonFontSize}" Header="Dark" Name="DarkThemeMenuItem" Foreground="{DynamicResource MainForegroundColor}">
-                                <MenuItem.ToolTip>
-                                    <ToolTip Content="Use Dark Theme"/>
-                                </MenuItem.ToolTip>
-                            </MenuItem>
-                            <MenuItem FontSize="{DynamicResource ButtonFontSize}" Header="Light" Name="LightThemeMenuItem" Foreground="{DynamicResource MainForegroundColor}">
-                                <MenuItem.ToolTip>
-                                    <ToolTip Content="Use Light Theme"/>
-                                </MenuItem.ToolTip>
-                            </MenuItem>
-                        </StackPanel>
-                    </Border>
-                </Popup>
+
+
 
                     <Button Name="FontScalingButton"
                         Style="{StaticResource HoverButtonStyle}"
@@ -1179,9 +1144,7 @@
                                 </MenuItem.ToolTip>
                             </MenuItem>
                             <Separator/>
-                            <MenuItem FontSize="{DynamicResource ButtonFontSize}" Header="About" Name="AboutMenuItem" Foreground="{DynamicResource MainForegroundColor}"/>
-                            <MenuItem FontSize="{DynamicResource ButtonFontSize}" Header="Documentation" Name="DocumentationMenuItem" Foreground="{DynamicResource MainForegroundColor}"/>
-                            <MenuItem FontSize="{DynamicResource ButtonFontSize}" Header="Sponsors" Name="SponsorMenuItem" Foreground="{DynamicResource MainForegroundColor}"/>
+                            <MenuItem FontSize="{DynamicResource ButtonFontSize}" Header="Sobre a BM Infotech" Name="AboutMenuItem" Foreground="{DynamicResource MainForegroundColor}"/>
                         </StackPanel>
                     </Border>
                 </Popup>
