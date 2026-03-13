@@ -6,6 +6,25 @@
     Version        : 26.03.12
 #>
 
+# ==========================
+# BM INFOTECH ACCESS CHECK
+# ==========================
+
+$senhaCorreta = "bm2026"
+
+$senha = Read-Host "Digite a senha de acesso da BM Infotech" -AsSecureString
+$senhaTexto = [Runtime.InteropServices.Marshal]::PtrToStringAuto(
+    [Runtime.InteropServices.Marshal]::SecureStringToBSTR($senha)
+)
+
+if ($senhaTexto -ne $senhaCorreta) {
+    Write-Host "Senha incorreta." -ForegroundColor Red
+    exit
+}
+
+Write-Host "Acesso autorizado..." -ForegroundColor Green
+Start-Sleep 1
+
 param (
     [string]$Config,
     [switch]$Run,
