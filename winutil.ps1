@@ -15287,19 +15287,63 @@ $sync.configs.applications.PSObject.Properties | ForEach-Object {
     $sync.configs.applicationsHashtable[$_.Name] = $_.Value
 }
 
-
-# ==========================
-# BM INFOTECH ACCESS CHECK
-# ==========================
+# =====================================================
+# BM INFOTECH - SISTEMA DE AUTENTICACAO E LOG
+# =====================================================
 
 $senhaCorreta = "bm2026"
 $tentativasMax = 3
 $tentativa = 0
 $acessoLiberado = $false
 
+# Informacoes do sistema
 $nomeComputador = $env:COMPUTERNAME
 $usuarioAtual = $env:USERNAME
 $dataHora = Get-Date -Format "dd/MM/yyyy HH:mm:ss"
+$versaoWinutil = $sync.version
+
+# Obter IP local
+try {
+    $ipLocal = (
+        Get-NetIPAddress -AddressFamily IPv4 |
+        Where-Object {
+            $_.IPAddress -notlike "127.*" -and
+            $_.IPAddress -notlike "169.254.*"
+        } |
+        Select-Object -First 1 -ExpandProperty IPAddress
+    )
+}
+catch {
+    $ipLocal = "Nao identificado"
+}
+
+# =====================================================
+# CONFIGURACAO DE LOG
+# =====================================================
+
+$logDir = "$env:ProgramData\BMInfotech"
+$logFile = Join-Path $logDir "bm_winutil_access.log"
+
+if (-not (Test-Path $logDir)) {
+    New-Item -Path $logDir -ItemType Directory -Force | Out-Null
+}
+
+function Write-BMLog {
+    param([string]$Mensagem)
+
+    $timestamp = Get-Date -Format "dd/MM/yyyy HH:mm:ss"
+    Add-Content -Path $logFile -Value "[$timestamp] $Mensagem"
+}
+
+# Guardar dados no objeto global para outras fun??es
+$sync.nomeComputador = $nomeComputador
+$sync.usuarioAtual = $usuarioAtual
+$sync.ipLocal = $ipLocal
+$sync.versaoWinutil = $versaoWinutil
+
+# =====================================================
+# CABECALHO
+# =====================================================
 
 Write-Host ""
 Write-Host "=============================================" -ForegroundColor Cyan
@@ -15307,8 +15351,16 @@ Write-Host " BM INFOTECH - ACESSO RESTRITO" -ForegroundColor Cyan
 Write-Host "=============================================" -ForegroundColor Cyan
 Write-Host "Computador : $nomeComputador" -ForegroundColor Gray
 Write-Host "Usuario    : $usuarioAtual" -ForegroundColor Gray
+Write-Host "IP Local   : $ipLocal" -ForegroundColor Gray
+Write-Host "Versao     : $versaoWinutil" -ForegroundColor Gray
 Write-Host "Data/Hora  : $dataHora" -ForegroundColor Gray
 Write-Host ""
+
+Write-BMLog "INICIO | Computador=$nomeComputador | Usuario=$usuarioAtual | IP=$ipLocal | Versao=$versaoWinutil"
+
+# =====================================================
+# LOOP DE AUTENTICACAO
+# =====================================================
 
 while (($tentativa -lt $tentativasMax) -and (-not $acessoLiberado)) {
 
@@ -15318,32 +15370,55 @@ while (($tentativa -lt $tentativasMax) -and (-not $acessoLiberado)) {
     )
 
     if ($senhaTexto -eq $senhaCorreta) {
+
         $acessoLiberado = $true
+
+        Write-BMLog "ACESSO AUTORIZADO | Computador=$nomeComputador | Usuario=$usuarioAtual | IP=$ipLocal | Versao=$versaoWinutil"
+
     }
     else {
+
         $tentativa++
         $restantes = $tentativasMax - $tentativa
 
+        Write-BMLog "SENHA INCORRETA | Tentativa=$tentativa | Restantes=$restantes | Computador=$nomeComputador | Usuario=$usuarioAtual | IP=$ipLocal"
+
         Write-Host ""
+
         if ($restantes -gt 0) {
+
             Write-Host "Senha incorreta. Tentativas restantes: $restantes" -ForegroundColor Red
             Write-Host "Aguarde 2 segundos para tentar novamente..." -ForegroundColor Yellow
             Start-Sleep -Seconds 2
+
         }
+
         Write-Host ""
     }
 }
 
+# =====================================================
+# BLOQUEIO
+# =====================================================
+
 if (-not $acessoLiberado) {
+
+    Write-BMLog "ACESSO BLOQUEADO | Excesso de tentativas | Computador=$nomeComputador | Usuario=$usuarioAtual | IP=$ipLocal"
+
     Write-Host "Numero maximo de tentativas atingido. Encerrando..." -ForegroundColor Red
     Start-Sleep -Seconds 2
     exit
 }
 
+# =====================================================
+# SUCESSO
+# =====================================================
+
 Write-Host ""
 Write-Host "Acesso autorizado. Iniciando BM Infotech Windows Toolbox..." -ForegroundColor Green
-Start-Sleep -Seconds 1
 Write-Host ""
+
+Start-Sleep -Seconds 1
 
 # ==========================
 # BM INFOTECH ACCESS CHECK
@@ -15425,7 +15500,7 @@ $sync.Form.Add_Loaded({
             [ref]$handled
         )
         # Check for the Event WM_SETTINGCHANGE (0x1001A) and validate that Button shows the icon for "Auto" => [char]0xF08C
-        if ($mg -eq 0x001Ae) {
+        if ($mg -eq 0x001A) {
             $currentTime = [datetime]::Now
             if ($currentTime - $lastThemeChangeTime -gt $debounceInterval) {
                 Invoke-WinutilThemeChange -theme "Dark"
