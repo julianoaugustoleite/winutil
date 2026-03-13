@@ -3,8 +3,65 @@
     Author         : BM Infotech
     Runspace Author: @brunomonteirobm_
     GitHub         : https://www.bminfotech.com.br/
-    Version        : 26.03.13
+    Version        : 26.03.12
 #>
+
+# ==========================
+# BM INFOTECH ACCESS CHECK
+# ==========================
+
+$senhaCorreta = "bm2026"
+$tentativasMax = 3
+$tentativa = 0
+$acessoLiberado = $false
+
+$nomeComputador = $env:COMPUTERNAME
+$usuarioAtual = $env:USERNAME
+$dataHora = Get-Date -Format "dd/MM/yyyy HH:mm:ss"
+
+Write-Host ""
+Write-Host "=============================================" -ForegroundColor Cyan
+Write-Host " BM INFOTECH - ACESSO RESTRITO" -ForegroundColor Cyan
+Write-Host "=============================================" -ForegroundColor Cyan
+Write-Host "Computador : $nomeComputador" -ForegroundColor Gray
+Write-Host "Usuario    : $usuarioAtual" -ForegroundColor Gray
+Write-Host "Data/Hora  : $dataHora" -ForegroundColor Gray
+Write-Host ""
+
+while (($tentativa -lt $tentativasMax) -and (-not $acessoLiberado)) {
+
+    $senha = Read-Host "Digite a senha de acesso da BM Infotech" -AsSecureString
+    $senhaTexto = [Runtime.InteropServices.Marshal]::PtrToStringAuto(
+        [Runtime.InteropServices.Marshal]::SecureStringToBSTR($senha)
+    )
+
+    if ($senhaTexto -eq $senhaCorreta) {
+        $acessoLiberado = $true
+    }
+    else {
+        $tentativa++
+        $restantes = $tentativasMax - $tentativa
+
+        Write-Host ""
+        if ($restantes -gt 0) {
+            Write-Host "Senha incorreta. Tentativas restantes: $restantes" -ForegroundColor Red
+            Write-Host "Aguarde 2 segundos para tentar novamente..." -ForegroundColor Yellow
+            Start-Sleep -Seconds 2
+        }
+        Write-Host ""
+    }
+}
+
+if (-not $acessoLiberado) {
+    Write-Host "Numero maximo de tentativas atingido. Encerrando..." -ForegroundColor Red
+    Start-Sleep -Seconds 2
+    exit
+}
+
+Write-Host ""
+Write-Host "Acesso autorizado. Iniciando BM Infotech Windows Toolbox..." -ForegroundColor Green
+Start-Sleep -Seconds 1
+Write-Host ""
 
 param (
     [string]$Config,
@@ -73,7 +130,7 @@ Add-Type -AssemblyName System.Windows.Forms
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "26.03.13"
+$sync.version = "26.03.12"
 $sync.configs = @{}
 $sync.Buttons = [System.Collections.Generic.List[PSObject]]::new()
 $sync.preferences = @{}
