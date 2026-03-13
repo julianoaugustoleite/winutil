@@ -3,27 +3,8 @@
     Author         : BM Infotech
     Runspace Author: @brunomonteirobm_
     GitHub         : https://www.bminfotech.com.br/
-    Version        : 26.03.12
+    Version        : 26.03.13
 #>
-
-# ==========================
-# BM INFOTECH ACCESS CHECK
-# ==========================
-
-$senhaCorreta = "bm2026"
-
-$senha = Read-Host "Digite a senha de acesso da BM Infotech" -AsSecureString
-$senhaTexto = [Runtime.InteropServices.Marshal]::PtrToStringAuto(
-    [Runtime.InteropServices.Marshal]::SecureStringToBSTR($senha)
-)
-
-if ($senhaTexto -ne $senhaCorreta) {
-    Write-Host "Senha incorreta." -ForegroundColor Red
-    exit
-}
-
-Write-Host "Acesso autorizado..." -ForegroundColor Green
-Start-Sleep 1
 
 param (
     [string]$Config,
@@ -92,7 +73,7 @@ Add-Type -AssemblyName System.Windows.Forms
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "26.03.12"
+$sync.version = "26.03.13"
 $sync.configs = @{}
 $sync.Buttons = [System.Collections.Generic.List[PSObject]]::new()
 $sync.preferences = @{}
