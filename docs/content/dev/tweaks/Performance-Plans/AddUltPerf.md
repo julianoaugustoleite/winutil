@@ -22,7 +22,7 @@ Function Invoke-WPFUltimatePerformance {
 
     try {
         # GUID of the Ultimate Performance power plan
-        $ultimateGUID = "00000000-0000-0000-0000-000000000000"
+        $ultimateGUID = "e9a42b02-d5df-448d-aa00-03f14749eb61"
 
         switch ($State) {
             "Enable" {
@@ -61,7 +61,7 @@ Function Invoke-WPFUltimatePerformance {
             }
             "Disable" {
                 # Check if the Ultimate Performance plan is installed by GUID
-                $installedPlan = powercfg -list | Select-String -Pattern "ChrisTitus - Ultimate Power Plan"
+                $installedPlan = powercfg -list | Select-String -Pattern "BM InfoTech - Desempenho Maximo"
 
                 if ($installedPlan) {
                     # Extract the GUID of the installed Ultimate Performance plan
