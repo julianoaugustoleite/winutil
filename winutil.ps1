@@ -3,7 +3,7 @@
     Author         : BM Infotech
     Runspace Author: @brunomonteirobm_
     GitHub         : https://www.bminfotech.com.br/
-    Version        : 26.03.13
+    Version        : 26.03.16
 #>
 
 param (
@@ -73,7 +73,7 @@ Add-Type -AssemblyName System.Windows.Forms
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "26.03.13"
+$sync.version = "26.03.16"
 $sync.configs = @{}
 $sync.Buttons = [System.Collections.Generic.List[PSObject]]::new()
 $sync.preferences = @{}
@@ -10636,19 +10636,6 @@ $sync.configs.tweaks = @'
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/hiber"
   },
-  "WPFTweaksWidget": {
-    "Content": "Remove Widgets",
-    "Description": "Removes the annoying widgets in the bottom left of the Taskbar.",
-    "category": "Essential Tweaks",
-    "panel": "9",
-    "InvokeScript": [
-      "\r\n      # Sometimes if you dont stop the Widgets process the removal may fail\r\n\r\n      Stop-Process -Name Widgets\r\n      Get-AppxPackage Microsoft.WidgetsPlatformRuntime -AllUsers | Remove-AppxPackage -AllUsers\r\n      Get-AppxPackage MicrosoftWindows.Client.WebExperience -AllUsers | Remove-AppxPackage -AllUsers\r\n\r\n      Invoke-WinUtilExplorerUpdate -action \"restart\"\r\n      Write-Host \"Removed widgets\"\r\n      "
-    ],
-    "UndoScript": [
-      "\r\n      Write-Host \"Restoring widgets AppxPackages\"\r\n\r\n      Add-AppxPackage -Register \"C:\\Program Files\\WindowsApps\\Microsoft.WidgetsPlatformRuntime*\\AppxManifest.xml\" -DisableDevelopmentMode\r\n      Add-AppxPackage -Register \"C:\\Program Files\\WindowsApps\\MicrosoftWindows.Client.WebExperience*\\AppxManifest.xml\" -DisableDevelopmentMode\r\n\r\n      Invoke-WinUtilExplorerUpdate -action \"restart\"\r\n      "
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/widget"
-  },
   "WPFTweaksRevertStartMenu": {
     "Content": "Revert the new start menu",
     "Description": "Uses vivetool to revert to the original start menu from 24H2.",
@@ -10661,19 +10648,6 @@ $sync.configs.tweaks = @'
       "\r\n      Invoke-WebRequest https://github.com/thebookisclosed/ViVe/releases/download/v0.3.4/ViVeTool-v0.3.4-IntelAmd.zip -OutFile ViVeTool.zip\r\n\r\n      Expand-Archive ViVeTool.zip\r\n      Remove-Item ViVeTool.zip\r\n\r\n      Start-Process 'ViVeTool\\ViVeTool.exe' -ArgumentList '/enable /id:47205210' -Wait -NoNewWindow\r\n\r\n      Remove-Item ViVeTool -Recurse\r\n\r\n      Write-Host 'New start menu reverted please restart your computer to take effect'\r\n      "
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/revertstartmenu"
-  },
-  "WPFTweaksDisableStoreSearch": {
-    "Content": "Disable Microsoft Store search results",
-    "Description": "Will not display recommended Microsoft Store apps when searching for apps in the Start menu.",
-    "category": "Essential Tweaks",
-    "panel": "9",
-    "InvokeScript": [
-      "icacls \"$Env:LocalAppData\\Packages\\Microsoft.WindowsStore_8wekyb3d8bbwe\\LocalState\\store.db\" /deny Everyone:F"
-    ],
-    "UndoScript": [
-      "icacls \"$Env:LocalAppData\\Packages\\Microsoft.WindowsStore_8wekyb3d8bbwe\\LocalState\\store.db\" /grant Everyone:F"
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/disablestoresearch"
   },
   "WPFTweaksLocation": {
     "Content": "Disable Location Tracking",
@@ -11956,19 +11930,6 @@ $sync.configs.tweaks = @'
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/telemetry"
   },
-  "WPFTweaksRemoveEdge": {
-    "Content": "Remove Microsoft Edge",
-    "Description": "Unblocks Microsoft Edge uninstaller restrictions then uses that uninstaller to remove Microsoft Edge.",
-    "category": "z__Advanced Tweaks - CAUTION",
-    "panel": "9",
-    "InvokeScript": [
-      "Invoke-WinUtilRemoveEdge"
-    ],
-    "UndoScript": [
-      "\r\n      Write-Host 'Installing Microsoft Edge...'\r\n      winget install Microsoft.Edge --source winget\r\n      "
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/removeedge"
-  },
   "WPFTweaksUTC": {
     "Content": "Set Time to UTC (Dual Boot)",
     "Description": "Essential for computers that are dual booting. Fixes the time sync with Linux Systems.",
@@ -11998,131 +11959,6 @@ $sync.configs.tweaks = @'
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/removeonedrive"
   },
-  "WPFTweaksRemoveHome": {
-    "Content": "Remove Home from Explorer",
-    "Description": "Removes the Home from Explorer and sets This PC as default.",
-    "category": "z__Advanced Tweaks - CAUTION",
-    "panel": "9",
-    "InvokeScript": [
-      "\r\n      Remove-Item \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}\"\r\n      Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" -Name LaunchTo -Value 1\r\n      "
-    ],
-    "UndoScript": [
-      "\r\n      New-Item \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}\"\r\n      Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" -Name LaunchTo -Value 0\r\n      "
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/removehome"
-  },
-  "WPFTweaksRemoveGallery": {
-    "Content": "Remove Gallery from explorer",
-    "Description": "Removes the Gallery from Explorer and sets This PC as default.",
-    "category": "z__Advanced Tweaks - CAUTION",
-    "panel": "9",
-    "InvokeScript": [
-      "\r\n      Remove-Item \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}\"\r\n      "
-    ],
-    "UndoScript": [
-      "\r\n      New-Item \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}\"\r\n      "
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/removegallery"
-  },
-  "WPFTweaksDisplay": {
-    "Content": "Set Display for Performance",
-    "Description": "Sets the system preferences to performance. You can do this manually with sysdm.cpl as well.",
-    "category": "z__Advanced Tweaks - CAUTION",
-    "panel": "9",
-    "registry": [
-      {
-        "Path": "HKCU:\\Control Panel\\Desktop",
-        "Name": "DragFullWindows",
-        "Value": "0",
-        "Type": "String",
-        "OriginalValue": "1"
-      },
-      {
-        "Path": "HKCU:\\Control Panel\\Desktop",
-        "Name": "MenuShowDelay",
-        "Value": "200",
-        "Type": "String",
-        "OriginalValue": "400"
-      },
-      {
-        "Path": "HKCU:\\Control Panel\\Desktop\\WindowMetrics",
-        "Name": "MinAnimate",
-        "Value": "0",
-        "Type": "String",
-        "OriginalValue": "1"
-      },
-      {
-        "Path": "HKCU:\\Control Panel\\Keyboard",
-        "Name": "KeyboardDelay",
-        "Value": "0",
-        "Type": "DWord",
-        "OriginalValue": "1"
-      },
-      {
-        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
-        "Name": "ListviewAlphaSelect",
-        "Value": "0",
-        "Type": "DWord",
-        "OriginalValue": "1"
-      },
-      {
-        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
-        "Name": "ListviewShadow",
-        "Value": "0",
-        "Type": "DWord",
-        "OriginalValue": "1"
-      },
-      {
-        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
-        "Name": "TaskbarAnimations",
-        "Value": "0",
-        "Type": "DWord",
-        "OriginalValue": "1"
-      },
-      {
-        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VisualEffects",
-        "Name": "VisualFXSetting",
-        "Value": "3",
-        "Type": "DWord",
-        "OriginalValue": "1"
-      },
-      {
-        "Path": "HKCU:\\Software\\Microsoft\\Windows\\DWM",
-        "Name": "EnableAeroPeek",
-        "Value": "0",
-        "Type": "DWord",
-        "OriginalValue": "1"
-      },
-      {
-        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
-        "Name": "TaskbarMn",
-        "Value": "0",
-        "Type": "DWord",
-        "OriginalValue": "1"
-      },
-      {
-        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
-        "Name": "ShowTaskViewButton",
-        "Value": "0",
-        "Type": "DWord",
-        "OriginalValue": "1"
-      },
-      {
-        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Search",
-        "Name": "SearchboxTaskbarMode",
-        "Value": "0",
-        "Type": "DWord",
-        "OriginalValue": "1"
-      }
-    ],
-    "InvokeScript": [
-      "Set-ItemProperty -Path \"HKCU:\\Control Panel\\Desktop\" -Name \"UserPreferencesMask\" -Type Binary -Value ([byte[]](144,18,3,128,16,0,0,0))"
-    ],
-    "UndoScript": [
-      "Remove-ItemProperty -Path \"HKCU:\\Control Panel\\Desktop\" -Name \"UserPreferencesMask\""
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/display"
-  },
   "WPFTweaksXboxRemoval": {
     "Content": "Remove Xbox & Gaming Components",
     "Description": "Removes Xbox services, the Xbox app, Game Bar, and related authentication components.",
@@ -12145,105 +11981,6 @@ $sync.configs.tweaks = @'
       "Microsoft.XboxGamingOverlay"
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/xboxremoval"
-  },
-  "WPFTweaksDeBloat": {
-    "Content": "Remove ALL MS Store Apps - NOT RECOMMENDED",
-    "Description": "USE WITH CAUTION!!! This will remove ALL Microsoft Store apps.",
-    "category": "z__Advanced Tweaks - CAUTION",
-    "panel": "9",
-    "appx": [
-      "Microsoft.Microsoft3DViewer",
-      "Microsoft.AppConnector",
-      "Microsoft.BingFinance",
-      "Microsoft.BingNews",
-      "Microsoft.BingSports",
-      "Microsoft.BingTranslator",
-      "Microsoft.BingWeather",
-      "Microsoft.BingFoodAndDrink",
-      "Microsoft.BingHealthAndFitness",
-      "Microsoft.BingTravel",
-      "Clipchamp.Clipchamp",
-      "Microsoft.Todos",
-      "MicrosoftCorporationII.QuickAssist",
-      "Microsoft.MicrosoftStickyNotes",
-      "Microsoft.GetHelp",
-      "Microsoft.GetStarted",
-      "Microsoft.Messaging",
-      "Microsoft.MicrosoftSolitaireCollection",
-      "Microsoft.NetworkSpeedTest",
-      "Microsoft.News",
-      "Microsoft.Office.Lens",
-      "Microsoft.Office.Sway",
-      "Microsoft.Office.OneNote",
-      "Microsoft.OneConnect",
-      "Microsoft.People",
-      "Microsoft.Print3D",
-      "Microsoft.SkypeApp",
-      "Microsoft.Wallet",
-      "Microsoft.Whiteboard",
-      "Microsoft.WindowsAlarms",
-      "Microsoft.WindowsCommunicationsApps",
-      "Microsoft.WindowsFeedbackHub",
-      "Microsoft.WindowsMaps",
-      "Microsoft.WindowsSoundRecorder",
-      "Microsoft.ConnectivityStore",
-      "Microsoft.ScreenSketch",
-      "Microsoft.MixedReality.Portal",
-      "Microsoft.ZuneMusic",
-      "Microsoft.ZuneVideo",
-      "Microsoft.MicrosoftOfficeHub",
-      "MsTeams",
-      "*EclipseManager*",
-      "*ActiproSoftwareLLC*",
-      "*AdobeSystemsIncorporated.AdobePhotoshopExpress*",
-      "*Duolingo-LearnLanguagesforFree*",
-      "*PandoraMediaInc*",
-      "*CandyCrush*",
-      "*BubbleWitch3Saga*",
-      "*Wunderlist*",
-      "*Flipboard*",
-      "*Twitter*",
-      "*Facebook*",
-      "*Royal Revolt*",
-      "*Sway*",
-      "*Speed Test*",
-      "*Dolby*",
-      "*Viber*",
-      "*ACGMediaPlayer*",
-      "*Netflix*",
-      "*OneCalendar*",
-      "*LinkedInForWindows*",
-      "*HiddenCityMysteryofShadows*",
-      "*Hulu*",
-      "*HiddenCity*",
-      "*AdobePhotoshopExpress*",
-      "*HotspotShieldFreeVPN*",
-      "*Microsoft.Advertising.Xaml*"
-    ],
-    "InvokeScript": [
-      "\r\n      $TeamsPath = \"$Env:LocalAppData\\Microsoft\\Teams\\Update.exe\"\r\n\r\n      if (Test-Path $TeamsPath) {\r\n        Write-Host \"Uninstalling Teams\"\r\n        Start-Process $TeamsPath -ArgumentList -uninstall -wait\r\n\r\n        Write-Host \"Deleting Teams directory\"\r\n        Remove-Item $TeamsPath -Recurse -Force\r\n      }\r\n      "
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/debloat"
-  },
-  "WPFTweaksRestorePoint": {
-    "Content": "Create Restore Point",
-    "Description": "Creates a restore point at runtime in case a revert is needed from WinUtil modifications.",
-    "category": "Essential Tweaks",
-    "panel": "9",
-    "Checked": "False",
-    "registry": [
-      {
-        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\SystemRestore",
-        "Name": "SystemRestorePointCreationFrequency",
-        "Value": "0",
-        "Type": "DWord",
-        "OriginalValue": "1440"
-      }
-    ],
-    "InvokeScript": [
-      "\r\n      if (-not (Get-ComputerRestorePoint)) {\r\n          Enable-ComputerRestore -Drive $Env:SystemDrive\r\n      }\r\n\r\n      Checkpoint-Computer -Description \"System Restore Point created by WinUtil\" -RestorePointType MODIFY_SETTINGS\r\n      Write-Host \"System Restore Point Created Successfully\" -ForegroundColor Green\r\n      "
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/restorepoint"
   },
   "WPFTweaksEndTaskOnTaskbar": {
     "Content": "Enable End Task With Right Click",
@@ -12273,22 +12010,6 @@ $sync.configs.tweaks = @'
       "[Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', '', 'Machine')"
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/powershell7tele"
-  },
-  "WPFTweaksStorage": {
-    "Content": "Disable Storage Sense",
-    "Description": "Storage Sense deletes temp files automatically.",
-    "category": "z__Advanced Tweaks - CAUTION",
-    "panel": "9",
-    "registry": [
-      {
-        "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\StorageSense\\Parameters\\StoragePolicy",
-        "Name": "01",
-        "Value": "0",
-        "Type": "DWord",
-        "OriginalValue": "1"
-      }
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/storage"
   },
   "WPFTweaksRemoveCopilot": {
     "Content": "Disable Microsoft Copilot",
@@ -12377,35 +12098,6 @@ $sync.configs.tweaks = @'
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/wpbt"
   },
-  "WPFTweaksRazerBlock": {
-    "Content": "Block Razer Software Installs",
-    "Description": "Blocks ALL Razer Software installations. The hardware works fine without any software.",
-    "category": "z__Advanced Tweaks - CAUTION",
-    "panel": "9",
-    "registry": [
-      {
-        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DriverSearching",
-        "Name": "SearchOrderConfig",
-        "Value": "0",
-        "Type": "DWord",
-        "OriginalValue": "1"
-      },
-      {
-        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Device Installer",
-        "Name": "DisableCoInstallers",
-        "Value": "1",
-        "Type": "DWord",
-        "OriginalValue": "0"
-      }
-    ],
-    "InvokeScript": [
-      "\r\n      $RazerPath = \"C:\\Windows\\Installer\\Razer\"\r\n\r\n      if (Test-Path $RazerPath) {\r\n        Remove-Item $RazerPath\\* -Recurse -Force\r\n      }\r\n      else {\r\n        New-Item -Path $RazerPath -ItemType Directory\r\n      }\r\n\r\n      icacls $RazerPath /deny \"Everyone:(W)\"\r\n      "
-    ],
-    "UndoScript": [
-      "\r\n      icacls \"C:\\Windows\\Installer\\Razer\" /remove:d Everyone\r\n      "
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/razerblock"
-  },
   "WPFTweaksDisableNotifications": {
     "Content": "Disable Notification Tray/Calendar",
     "Description": "Disables all Notifications INCLUDING Calendar.",
@@ -12464,16 +12156,6 @@ $sync.configs.tweaks = @'
       "\r\n      cleanmgr.exe /d C: /VERYLOWDISK\r\n      Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase\r\n      "
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/diskcleanup"
-  },
-  "WPFTweaksDeleteTempFiles": {
-    "Content": "Delete Temporary Files",
-    "Description": "Erases TEMP Folders.",
-    "category": "Essential Tweaks",
-    "panel": "9",
-    "InvokeScript": [
-      "\r\n      Remove-Item -Path \"$Env:Temp\\*\" -Recurse -Force\r\n      Remove-Item -Path \"$Env:SystemRoot\\Temp\\*\" -Recurse -Force\r\n      "
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/deletetempfiles"
   },
   "WPFTweaksIPv46": {
     "Content": "Prefer IPv4 over IPv6",
@@ -12550,22 +12232,6 @@ $sync.configs.tweaks = @'
       }
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/disablebgapps"
-  },
-  "WPFTweaksDisableFSO": {
-    "Content": "Disable Fullscreen Optimizations",
-    "Description": "Disables FSO in all applications. NOTE: This will disable Color Management in Exclusive Fullscreen.",
-    "category": "z__Advanced Tweaks - CAUTION",
-    "panel": "9",
-    "registry": [
-      {
-        "Path": "HKCU:\\System\\GameConfigStore",
-        "Name": "GameDVR_DXGIHonorFSEWindowsCompatible",
-        "Value": "1",
-        "Type": "DWord",
-        "OriginalValue": "0"
-      }
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/disablefso"
   },
   "WPFToggleDarkMode": {
     "Content": "Dark Theme for Windows",
