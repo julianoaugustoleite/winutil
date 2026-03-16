@@ -6161,7 +6161,7 @@ Function Invoke-WPFUltimatePerformance {
     try {
         # GUID of the Ultimate Performance power plan
         $ultimateGUID = "00000000-0000-0000-0000-000000000000"
-
+# codigo antigo: e9a42b02-d5df-448d-aa00-03f14749eb61
         switch ($State) {
             "Enable" {
                 # Duplicate the Ultimate Performance power plan using its GUID

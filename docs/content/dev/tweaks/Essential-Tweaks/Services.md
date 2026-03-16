@@ -1,5 +1,5 @@
 ---
-title: "Set Services to Manual"
+title: "Set Services Minimal"
 description: ""
 ---
 
