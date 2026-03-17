@@ -14925,13 +14925,15 @@ $scripts = @(
 </unattend>
 '@
 # Create enums
-Add-Type @"
+if (-not ("PackageManagers" -as [type])) {
+    Add-Type @"
 public enum PackageManagers
 {
     Winget,
     Choco
 }
 "@
+}
 
 # SPDX-License-Identifier: MIT
 # Set the maximum number of threads for the RunspacePool to the number of threads on the machine
@@ -15028,25 +15030,24 @@ catch {
 # CONFIGURACAO DE LOG
 # =====================================================
 
-$logDir = "$env:ProgramData\BMInfotech"
-$logFile = Join-Path $logDir "bm_winutil_access.log"
+#$logDir = "$env:ProgramData\BMInfotech"$logFile = Join-Path $logDir "bm_winutil_access.log"
 
-if (-not (Test-Path $logDir)) {
-    New-Item -Path $logDir -ItemType Directory -Force | Out-Null
-}
+#if (-not (Test-Path $logDir)) {
+#    New-Item -Path $logDir -ItemType Directory -Force | Out-Null
+#}
 
-function Write-BMLog {
-    param([string]$Mensagem)
+#function Write-BMLog {
+#    param([string]$Mensagem)
 
-    $timestamp = Get-Date -Format "dd/MM/yyyy HH:mm:ss"
-    Add-Content -Path $logFile -Value "[$timestamp] $Mensagem"
-}
+#    $timestamp = Get-Date -Format "dd/MM/yyyy HH:mm:ss"
+#    Add-Content -Path $logFile -Value "[$timestamp] $Mensagem"
+#}
 
 # Guardar dados no objeto global para outras fun??es
-$sync.nomeComputador = $nomeComputador
-$sync.usuarioAtual = $usuarioAtual
-$sync.ipLocal = $ipLocal
-$sync.versaoWinutil = $versaoWinutil
+#$sync.nomeComputador = $nomeComputador
+#$sync.usuarioAtual = $usuarioAtual
+#$sync.ipLocal = $ipLocal
+#$sync.versaoWinutil = $versaoWinutil
 
 # =====================================================
 # CABECALHO
@@ -15063,7 +15064,7 @@ Write-Host "Versao     : $versaoWinutil" -ForegroundColor Gray
 Write-Host "Data/Hora  : $dataHora" -ForegroundColor Gray
 Write-Host ""
 
-Write-BMLog "INICIO | Computador=$nomeComputador | Usuario=$usuarioAtual | IP=$ipLocal | Versao=$versaoWinutil"
+#Write-BMLog "INICIO | Computador=$nomeComputador | Usuario=$usuarioAtual | IP=$ipLocal | Versao=$versaoWinutil"
 
 # =====================================================
 # LOOP DE AUTENTICACAO
@@ -15080,7 +15081,7 @@ while (($tentativa -lt $tentativasMax) -and (-not $acessoLiberado)) {
 
         $acessoLiberado = $true
 
-        Write-BMLog "ACESSO AUTORIZADO | Computador=$nomeComputador | Usuario=$usuarioAtual | IP=$ipLocal | Versao=$versaoWinutil"
+        #Write-BMLog "ACESSO AUTORIZADO | Computador=$nomeComputador | Usuario=$usuarioAtual | IP=$ipLocal | Versao=$versaoWinutil"
 
     }
     else {
@@ -15128,7 +15129,7 @@ Write-Host ""
 Start-Sleep -Seconds 1
 
 # ==========================
-# BM INFOTECH ACCESS CHECK
+# FIM BM INFOTECH ACCESS CHECK
 # ==========================
 
 Set-Preferences
@@ -15241,6 +15242,30 @@ Invoke-WPFUIElements -configVariable $sync.configs.feature -targetGridName "feat
 
 $xaml.SelectNodes("//*[@Name]") | ForEach-Object {$sync["$("$($psitem.Name)")"] = $sync["Form"].FindName($psitem.Name)}
 
+#================================
+# Ocultar abas que o cliente nao deve ver
+$ocultarAbaInstall = $true
+$ocultarAbaWin11Creator = $true
+$ocultarAbaStandard = $true
+$ocultarAbainstalledtweaks = $true
+if ($ocultarAbaInstall -and $sync.WPFTab1BT) {
+    $sync.WPFTab1BT.Visibility = [System.Windows.Visibility]::Collapsed
+}
+
+if ($ocultarAbaWin11Creator -and $sync.WPFTab5BT) {
+    $sync.WPFTab5BT.Visibility = [System.Windows.Visibility]::Collapsed
+}
+
+# Ocultar botoes da aba Tweaks
+if ($ocultarAbaStandard -and $sync.WPFstandard) {
+    $sync.WPFstandard.Visibility = [System.Windows.Visibility]::Collapsed
+}
+
+if ($ocultarAbainstalledtweaks -and $sync.WPFGetInstalledTweaks) {
+    $sync.WPFGetInstalledTweaks.Visibility = [System.Windows.Visibility]::Collapsed
+}
+#=================================
+
 #Persist Package Manager preference across winutil restarts
 $sync.ChocoRadioButton.Add_Checked({
     $sync.preferences.packagemanager = [PackageManagers]::Choco
@@ -15348,11 +15373,11 @@ $commonKeyEvents = {
     if ($_.KeyboardDevice.Modifiers -eq "Alt") {
         $keyEventArgs = $_
         switch ($_.SystemKey) {
-            "I" { Invoke-WPFButton "WPFTab1BT"; $keyEventArgs.Handled = $true } # Navigate to Install tab and suppress Windows Warning Sound
+            #"I" { Invoke-WPFButton "WPFTab1BT"; $keyEventArgs.Handled = $true } # Navigate to Install tab and suppress Windows Warning Sound
             "T" { Invoke-WPFButton "WPFTab2BT"; $keyEventArgs.Handled = $true } # Navigate to Tweaks tab
             "C" { Invoke-WPFButton "WPFTab3BT"; $keyEventArgs.Handled = $true } # Navigate to Config tab
             "U" { Invoke-WPFButton "WPFTab4BT"; $keyEventArgs.Handled = $true } # Navigate to Updates tab
-            "W" { Invoke-WPFButton "WPFTab5BT"; $keyEventArgs.Handled = $true } # Navigate to Win11ISO tab
+            #"W" { Invoke-WPFButton "WPFTab5BT"; $keyEventArgs.Handled = $true } # Navigate to Win11ISO tab
         }
     }
     # Handle Ctrl key combinations for specific actions
@@ -15441,7 +15466,7 @@ $sync["Form"].Add_ContentRendered({
         $sync.WPFTab1BT.IsEnabled = $true
         $sync.WPFTab1BT.Opacity = 1.0
         $sync.WPFTab1BT.ToolTip = $null
-        Invoke-WPFTab "WPFTab1BT"  # Default to install tab
+        Invoke-WPFTab "WPFTab2BT"  # Default to install tab
     }
 
     $sync["Form"].Focus()
