@@ -13,6 +13,26 @@ function Invoke-WPFtweaksbutton {
   }
 
   $Tweaks = $sync.selectedTweaks
+#========================================
+# Garantir ordem correta entre os tweaks de servicos
+$priorityTweaks = @(
+  "WPFTweaksServices",  # Set Services to Minimal
+  "WPFTweaksGamer"      # Set Services to Game
+)
+
+$orderedTweaks = @()
+
+foreach ($priority in $priorityTweaks) {
+  if ($Tweaks -contains $priority) {
+    $orderedTweaks += $priority
+  }
+}
+
+$orderedTweaks += $Tweaks | Where-Object { $_ -notin $priorityTweaks }
+
+$Tweaks = $orderedTweaks
+#===========================
+
   $dnsProvider = $sync["WPFchangedns"].text
   $restorePointTweak = "WPFTweaksRestorePoint"
   $restorePointSelected = $Tweaks -contains $restorePointTweak
