@@ -3,7 +3,7 @@ title: "Revert the new start menu"
 description: ""
 ---
 
-```json {filename="config/tweaks.json",linenos=inline,linenostart=90}
+```json {filename="config/tweaks.json",linenos=inline,linenostart=61}
   "WPFTweaksRevertStartMenu": {
     "Content": "Revert the new start menu",
     "Description": "Uses vivetool to revert to the original start menu from 24H2.",

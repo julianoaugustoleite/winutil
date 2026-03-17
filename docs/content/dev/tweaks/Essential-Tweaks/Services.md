@@ -3,7 +3,7 @@ title: "Set Services Minimal"
 description: ""
 ---
 
-```json {filename="config/tweaks.json",linenos=inline,linenostart=175}
+```json {filename="config/tweaks.json",linenos=inline,linenostart=133}
   "WPFTweaksServices": {
     "Content": "Set Services to Minimal",
     "Description": "Turns a bunch of system services to manual that don't need to be running all the time. This is pretty harmless as if the service is needed, it will simply start on demand.",
