@@ -58,10 +58,6 @@ function Invoke-WPFButton {
         "WPFOOSUbutton" {Invoke-WPFOOSU}
         "WPFAddUltPerf" {Invoke-WPFUltimatePerformance -State "Enable"}
         "WPFRemoveUltPerf" {Invoke-WPFUltimatePerformance -State "Disable"}
-
-        "WPFDownloadPacote1" { Invoke-WPFDownloadZip -Url "https://seudominio.com.br/pacote1.zip" -FileName "Pacote1.zip" }
-        "WPFDownloadPacote2" { Invoke-WPFDownloadZip -Url "https://seudominio.com.br/pacote2.zip" -FileName "Pacote2.zip" }
-
         "WPFundoall" {Invoke-WPFundoall}
         "WPFUpdatesdefault" {Invoke-WPFUpdatesdefault}
         "WPFRunAdobeCCCleanerTool" {Invoke-WPFRunAdobeCCCleanerTool}

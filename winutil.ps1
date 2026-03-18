@@ -4606,10 +4606,6 @@ function Invoke-WPFButton {
         "WPFOOSUbutton" {Invoke-WPFOOSU}
         "WPFAddUltPerf" {Invoke-WPFUltimatePerformance -State "Enable"}
         "WPFRemoveUltPerf" {Invoke-WPFUltimatePerformance -State "Disable"}
-
-        "WPFDownloadPacote1" { Invoke-WPFDownloadZip -Url "https://seudominio.com.br/pacote1.zip" -FileName "Pacote1.zip" }
-        "WPFDownloadPacote2" { Invoke-WPFDownloadZip -Url "https://seudominio.com.br/pacote2.zip" -FileName "Pacote2.zip" }
-
         "WPFundoall" {Invoke-WPFundoall}
         "WPFUpdatesdefault" {Invoke-WPFUpdatesdefault}
         "WPFRunAdobeCCCleanerTool" {Invoke-WPFRunAdobeCCCleanerTool}
@@ -4628,6 +4624,13 @@ function Invoke-WPFButton {
             }
         }
     }
+}
+function Invoke-WPFDownloadInstallers {
+    Invoke-WPFDownloadZip -Url "https://raw.githubusercontent.com/julianoaugustoleite/winutil/main/downloads/installers.zip" -FileName "installers.zip"
+}
+
+function Invoke-WPFDownloadSoftwares {
+    Invoke-WPFDownloadZip -Url "https://raw.githubusercontent.com/julianoaugustoleite/winutil/main/downloads/softwares.zip" -FileName "softwares.zip"
 }
 function Invoke-WPFDownloadZip {
     param(
@@ -5860,6 +5863,7 @@ function Invoke-WPFUIElements {
             Checked     = $entryInfo.Checked
             ButtonWidth = $entryInfo.ButtonWidth
             GroupName   = $entryInfo.GroupName  # Added for RadioButton groupings
+            SortOrder   = if ($null -ne $entryInfo.SortOrder) { [int]$entryInfo.SortOrder } else { 9999 }
         }
 
         if (-not $organizedData.ContainsKey($entryObject.Panel)) {
@@ -5925,7 +5929,9 @@ function Invoke-WPFUIElements {
             $sync[$category] = $label
 
             # Sort entries by type (checkboxes first, then buttons, then comboboxes) and then alphabetically by Content
-            $entries = $organizedData[$panelKey][$category] | Sort-Object @{Expression = {
+            $entries = $organizedData[$panelKey][$category] | Sort-Object `
+            @{Expression = { $_.SortOrder }},`
+            @{Expression = {
                 switch ($_.Type) {
                     'Button' { 1 }
                     'Combobox' { 2 }
@@ -10172,7 +10178,7 @@ $sync.configs.feature = @'
   "WPFFeaturesdotnet": {
     "Content": "All .Net Framework (2,3,4)",
     "Description": ".NET and .NET Framework is a developer platform made up of tools, programming languages, and libraries for building many different types of applications.",
-    "category": "Features",
+    "category": "1__Features",
     "panel": "1",
     "feature": [
       "NetFx4-AdvSrvs",
@@ -10184,7 +10190,7 @@ $sync.configs.feature = @'
   "WPFFeatureshyperv": {
     "Content": "HyperV Virtualization",
     "Description": "Hyper-V is a hardware virtualization product developed by Microsoft that allows users to create and manage virtual machines.",
-    "category": "Features",
+    "category": "1__Features",
     "panel": "1",
     "feature": [
       "Microsoft-Hyper-V-All"
@@ -10197,7 +10203,7 @@ $sync.configs.feature = @'
   "WPFFeatureslegacymedia": {
     "Content": "Legacy Media (WMP, DirectPlay)",
     "Description": "Enables legacy programs from previous versions of Windows.",
-    "category": "Features",
+    "category": "1__Features",
     "panel": "1",
     "feature": [
       "WindowsMediaPlayer",
@@ -10211,7 +10217,7 @@ $sync.configs.feature = @'
   "WPFFeaturewsl": {
     "Content": "Windows Subsystem for Linux",
     "Description": "Windows Subsystem for Linux is an optional feature of Windows that allows Linux programs to run natively on Windows without the need for a separate virtual machine or dual booting.",
-    "category": "Features",
+    "category": "1__Features",
     "panel": "1",
     "feature": [
       "VirtualMachinePlatform",
@@ -10223,7 +10229,7 @@ $sync.configs.feature = @'
   "WPFFeaturenfs": {
     "Content": "NFS - Network File System",
     "Description": "Network File System (NFS) is a mechanism for storing files on a network.",
-    "category": "Features",
+    "category": "1__Features",
     "panel": "1",
     "feature": [
       "ServicesForNFS-ClientOnly",
@@ -10242,7 +10248,7 @@ $sync.configs.feature = @'
   "WPFFeatureRegBackup": {
     "Content": "Enable Daily Registry Backup Task 12.30am",
     "Description": "Enables daily registry backup, previously disabled by Microsoft in Windows 10 1803.",
-    "category": "Features",
+    "category": "1__Features",
     "panel": "1",
     "feature": [],
     "InvokeScript": [
@@ -10253,7 +10259,7 @@ $sync.configs.feature = @'
   "WPFFeatureEnableLegacyRecovery": {
     "Content": "Enable Legacy F8 Boot Recovery",
     "Description": "Enables Advanced Boot Options screen that lets you start Windows in advanced troubleshooting modes.",
-    "category": "Features",
+    "category": "1__Features",
     "panel": "1",
     "feature": [],
     "InvokeScript": [
@@ -10264,7 +10270,7 @@ $sync.configs.feature = @'
   "WPFFeatureDisableLegacyRecovery": {
     "Content": "Disable Legacy F8 Boot Recovery",
     "Description": "Disables Advanced Boot Options screen that lets you start Windows in advanced troubleshooting modes.",
-    "category": "Features",
+    "category": "1__Features",
     "panel": "1",
     "feature": [],
     "InvokeScript": [
@@ -10275,7 +10281,7 @@ $sync.configs.feature = @'
   "WPFFeaturesSandbox": {
     "Content": "Windows Sandbox",
     "Description": "Windows Sandbox is a lightweight virtual machine that provides a temporary desktop environment to safely run applications and programs in isolation.",
-    "category": "Features",
+    "category": "1__Features",
     "panel": "1",
     "feature": [
       "Containers-DisposableClientVM"
@@ -10284,7 +10290,7 @@ $sync.configs.feature = @'
   },
   "WPFFeatureInstall": {
     "Content": "Install Features",
-    "category": "Features",
+    "category": "1__Features",
     "panel": "1",
     "Type": "Button",
     "ButtonWidth": "300",
@@ -10293,7 +10299,7 @@ $sync.configs.feature = @'
   },
   "WPFPanelAutologin": {
     "Content": "Set Up Autologin",
-    "category": "Fixes",
+    "category": "2__Fixes",
     "panel": "1",
     "Type": "Button",
     "ButtonWidth": "300",
@@ -10302,7 +10308,7 @@ $sync.configs.feature = @'
   },
   "WPFFixesUpdate": {
     "Content": "Reset Windows Update",
-    "category": "Fixes",
+    "category": "2__Fixes",
     "panel": "1",
     "Type": "Button",
     "ButtonWidth": "300",
@@ -10311,7 +10317,7 @@ $sync.configs.feature = @'
   },
   "WPFFixesNetwork": {
     "Content": "Reset Network",
-    "category": "Fixes",
+    "category": "2__Fixes",
     "panel": "1",
     "Type": "Button",
     "ButtonWidth": "300",
@@ -10320,7 +10326,7 @@ $sync.configs.feature = @'
   },
   "WPFPanelDISM": {
     "Content": "System Corruption Scan",
-    "category": "Fixes",
+    "category": "2__Fixes",
     "panel": "1",
     "Type": "Button",
     "ButtonWidth": "300",
@@ -10329,12 +10335,28 @@ $sync.configs.feature = @'
   },
   "WPFFixesWinget": {
     "Content": "WinGet Reinstall",
-    "category": "Fixes",
+    "category": "2__Fixes",
     "panel": "1",
     "Type": "Button",
     "ButtonWidth": "300",
     "function": "Invoke-WPFFixesWinget",
     "link": "https://winutil.christitus.com/dev/features/fixes/winget"
+  },
+  "WPFDownloadPacote1": {
+    "Content": "Download Installers",
+    "category": "3__Downloads",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "function": "Invoke-WPFDownloadInstallers"
+  },
+  "WPFDownloadPacote2": {
+    "Content": "Download Softwares",
+    "category": "3__Downloads",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "function": "Invoke-WPFDownloadSoftwares"
   },
   "WPFPanelControl": {
     "Content": "Control Panel",
@@ -10643,6 +10665,7 @@ $sync.configs.tweaks = @'
     "Description": "Erases recent docs, clipboard, and run history.",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 1,
     "registry": [
       {
         "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
@@ -10673,6 +10696,7 @@ $sync.configs.tweaks = @'
     "Description": "Hibernation is really meant for laptops as it saves what's in memory before turning the PC off. It really should never be used.",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 4,
     "registry": [
       {
         "Path": "HKLM:\\System\\CurrentControlSet\\Control\\Session Manager\\Power",
@@ -10715,6 +10739,7 @@ $sync.configs.tweaks = @'
     "Description": "Disables Location Tracking.",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 5,
     "registry": [
       {
         "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location",
@@ -10752,6 +10777,7 @@ $sync.configs.tweaks = @'
     "Description": "Turns a bunch of system services to manual that don't need to be running all the time. This is pretty harmless as if the service is needed, it will simply start on demand.",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 11,
     "service": [
       {
         "Name": "ALG",
@@ -11881,6 +11907,7 @@ $sync.configs.tweaks = @'
     "Description": "Windows will not automatically install any games, third-party apps, or application links from the Windows Store for the signed-in user. Some default Apps will be inaccessible (eg. Phone Link).",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 2,
     "registry": [
       {
         "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent",
@@ -11897,6 +11924,7 @@ $sync.configs.tweaks = @'
     "Description": "Disables Microsoft Telemetry.",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 7,
     "registry": [
       {
         "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\AdvertisingInfo",
@@ -12048,6 +12076,7 @@ $sync.configs.tweaks = @'
     "Description": "Enables option to end task when right clicking a program in the taskbar.",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 9,
     "registry": [
       {
         "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\TaskbarDeveloperSettings",
@@ -12064,6 +12093,7 @@ $sync.configs.tweaks = @'
     "Description": "Creates an Environment Variable called 'POWERSHELL_TELEMETRY_OPTOUT' with a value of '1' which will tell PowerShell 7 to not send Telemetry Data.",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 6,
     "InvokeScript": [
       "[Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', '1', 'Machine')"
     ],
@@ -12148,6 +12178,7 @@ $sync.configs.tweaks = @'
     "Description": "If enabled, WPBT allows your computer vendor to execute programs at boot time, such as anti-theft software, software drivers, as well as force install software without user consent. Poses potential security risk.",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 8,
     "registry": [
       {
         "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager",
@@ -12213,6 +12244,7 @@ $sync.configs.tweaks = @'
     "Description": "Runs Disk Cleanup on Drive C: and removes old Windows Updates.",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 10,
     "InvokeScript": [
       "\r\n      cleanmgr.exe /d C: /VERYLOWDISK\r\n      Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase\r\n      "
     ],
@@ -12297,7 +12329,7 @@ $sync.configs.tweaks = @'
   "WPFToggleDarkMode": {
     "Content": "Dark Theme for Windows",
     "Description": "Enable/Disable Dark Mode.",
-    "category": "Customize Preferences",
+    "category": "1__Customize Preferences",
     "panel": "2",
     "Type": "Toggle",
     "registry": [
@@ -12329,7 +12361,7 @@ $sync.configs.tweaks = @'
   "WPFToggleBingSearch": {
     "Content": "Bing Search in Start Menu",
     "Description": "If enabled, Bing web search results will be included in your Start Menu search.",
-    "category": "Customize Preferences",
+    "category": "1__Customize Preferences",
     "panel": "2",
     "Type": "Toggle",
     "registry": [
@@ -12361,7 +12393,7 @@ $sync.configs.tweaks = @'
   },
   "WPFAddUltPerf": {
     "Content": "Add Power Plan BM InfoTech",
-    "category": "Performance Plans",
+    "category": "2__Performance Plans",
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
@@ -12369,33 +12401,18 @@ $sync.configs.tweaks = @'
   },
   "WPFRemoveUltPerf": {
     "Content": "Remove Power Plan BM InfoTech",
-    "category": "Performance Plans",
+    "category": "2__Performance Plans",
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
     "link": "https://winutil.christitus.com/dev/tweaks/performance-plans/removeultperf"
-  },
-  "WPFDownloadPacote1": {
-    "Content": "Download Installers",
-    "category": "Performance Plans",
-    "panel": "2",
-    "Type": "Button",
-    "ButtonWidth": "300",
-    "link": "https://seudominio.com.br/installers.zip"
-  },
-  "WPFDownloadPacote2": {
-    "Content": "Download Softwares",
-    "category": "Performance Plans",
-    "panel": "2",
-    "Type": "Button",
-    "ButtonWidth": "300",
-    "link": "https://seudominio.com.br/softtware.zip"
   },
   "WPFTweaksDisableExplorerAutoDiscovery": {
     "Content": "Disable Explorer Automatic Folder Discovery",
     "Description": "Windows Explorer automatically tries to guess the type of the folder based on its contents, slowing down the browsing experience. WARNING! Will disable File Explorer grouping.",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 3,
     "InvokeScript": [
       "\r\n      # Previously detected folders\r\n      $bags = \"HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags\"\r\n\r\n      # Folder types lookup table\r\n      $bagMRU = \"HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\BagMRU\"\r\n\r\n      # Flush Explorer view database\r\n      Remove-Item -Path $bags -Recurse -Force\r\n      Write-Host \"Removed $bags\"\r\n\r\n      Remove-Item -Path $bagMRU -Recurse -Force\r\n      Write-Host \"Removed $bagMRU\"\r\n\r\n      # Every folder\r\n      $allFolders = \"HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags\\AllFolders\\Shell\"\r\n\r\n      if (!(Test-Path $allFolders)) {\r\n        New-Item -Path $allFolders -Force\r\n        Write-Host \"Created $allFolders\"\r\n      }\r\n\r\n      # Generic view\r\n      New-ItemProperty -Path $allFolders -Name \"FolderType\" -Value \"NotSpecified\" -PropertyType String -Force\r\n      Write-Host \"Set FolderType to NotSpecified\"\r\n\r\n      Write-Host Please sign out and back in, or restart your computer to apply the changes!\r\n      "
     ],
@@ -12409,6 +12426,7 @@ $sync.configs.tweaks = @'
     "Description": "Seta os servi?os para gamers",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 12,
     "service": [
       {
         "Name": "AarSvc",

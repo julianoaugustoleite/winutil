@@ -4,6 +4,7 @@
     "Description": "Erases recent docs, clipboard, and run history.",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 1,
     "registry": [
       {
         "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
@@ -34,6 +35,7 @@
     "Description": "Hibernation is really meant for laptops as it saves what's in memory before turning the PC off. It really should never be used.",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 4,
     "registry": [
       {
         "Path": "HKLM:\\System\\CurrentControlSet\\Control\\Session Manager\\Power",
@@ -98,6 +100,7 @@
     "Description": "Disables Location Tracking.",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 5,
     "registry": [
       {
         "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location",
@@ -135,6 +138,7 @@
     "Description": "Turns a bunch of system services to manual that don't need to be running all the time. This is pretty harmless as if the service is needed, it will simply start on demand.",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 11,
     "service": [
       {
         "Name": "ALG",
@@ -1264,6 +1268,7 @@
     "Description": "Windows will not automatically install any games, third-party apps, or application links from the Windows Store for the signed-in user. Some default Apps will be inaccessible (eg. Phone Link).",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 2,
     "registry": [
       {
         "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent",
@@ -1280,6 +1285,7 @@
     "Description": "Disables Microsoft Telemetry.",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 7,
     "registry": [
       {
         "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\AdvertisingInfo",
@@ -1482,6 +1488,7 @@
     "Description": "Enables option to end task when right clicking a program in the taskbar.",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 9,
     "registry": [
       {
         "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\TaskbarDeveloperSettings",
@@ -1498,6 +1505,7 @@
     "Description": "Creates an Environment Variable called 'POWERSHELL_TELEMETRY_OPTOUT' with a value of '1' which will tell PowerShell 7 to not send Telemetry Data.",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 6,
     "InvokeScript": [
       "[Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', '1', 'Machine')"
     ],
@@ -1596,6 +1604,7 @@
     "Description": "If enabled, WPBT allows your computer vendor to execute programs at boot time, such as anti-theft software, software drivers, as well as force install software without user consent. Poses potential security risk.",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 8,
     "registry": [
       {
         "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager",
@@ -1688,6 +1697,7 @@
     "Description": "Runs Disk Cleanup on Drive C: and removes old Windows Updates.",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 10,
     "InvokeScript": [
       "
       cleanmgr.exe /d C: /VERYLOWDISK
@@ -1777,7 +1787,7 @@
   "WPFToggleDarkMode": {
     "Content": "Dark Theme for Windows",
     "Description": "Enable/Disable Dark Mode.",
-    "category": "Customize Preferences",
+    "category": "1__Customize Preferences",
     "panel": "2",
     "Type": "Toggle",
     "registry": [
@@ -1819,7 +1829,7 @@
   "WPFToggleBingSearch": {
     "Content": "Bing Search in Start Menu",
     "Description": "If enabled, Bing web search results will be included in your Start Menu search.",
-    "category": "Customize Preferences",
+    "category": "1__Customize Preferences",
     "panel": "2",
     "Type": "Toggle",
     "registry": [
@@ -1852,7 +1862,7 @@
   },
   "WPFAddUltPerf": {
     "Content": "Add Power Plan BM InfoTech",
-    "category": "Performance Plans",
+    "category": "2__Performance Plans",
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
@@ -1860,35 +1870,19 @@
   },
   "WPFRemoveUltPerf": {
     "Content": "Remove Power Plan BM InfoTech",
-    "category": "Performance Plans",
+    "category": "2__Performance Plans",
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
     "link": "https://winutil.christitus.com/dev/tweaks/performance-plans/removeultperf"
   },
 
-  "WPFDownloadPacote1": {
-  "Content": "Download Installers",
-  "category": "Performance Plans",
-  "panel": "2",
-  "Type": "Button",
-  "ButtonWidth": "300",
-  "link": "https://seudominio.com.br/installers.zip"
-},
-"WPFDownloadPacote2": {
-  "Content": "Download Softwares",
-  "category": "Performance Plans",
-  "panel": "2",
-  "Type": "Button",
-  "ButtonWidth": "300",
-  "link": "https://seudominio.com.br/softtware.zip"
-},
-
-  "WPFTweaksDisableExplorerAutoDiscovery": {
+   "WPFTweaksDisableExplorerAutoDiscovery": {
     "Content": "Disable Explorer Automatic Folder Discovery",
     "Description": "Windows Explorer automatically tries to guess the type of the folder based on its contents, slowing down the browsing experience. WARNING! Will disable File Explorer grouping.",
     "category": "Essential Tweaks",
     "panel": "1",
+    "SortOrder": 3,
     "InvokeScript": [
       "
       # Previously detected folders
@@ -1945,6 +1939,7 @@
   "Description": "Seta os serviços para gamers",
   "category": "Essential Tweaks",
   "panel": "1",
+  "SortOrder": 12,
   "service": [
     {
       "Name": "AarSvc",

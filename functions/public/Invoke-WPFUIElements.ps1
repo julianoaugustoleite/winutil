@@ -79,6 +79,7 @@ function Invoke-WPFUIElements {
             Checked     = $entryInfo.Checked
             ButtonWidth = $entryInfo.ButtonWidth
             GroupName   = $entryInfo.GroupName  # Added for RadioButton groupings
+            SortOrder   = if ($null -ne $entryInfo.SortOrder) { [int]$entryInfo.SortOrder } else { 9999 }
         }
 
         if (-not $organizedData.ContainsKey($entryObject.Panel)) {
@@ -144,7 +145,9 @@ function Invoke-WPFUIElements {
             $sync[$category] = $label
 
             # Sort entries by type (checkboxes first, then buttons, then comboboxes) and then alphabetically by Content
-            $entries = $organizedData[$panelKey][$category] | Sort-Object @{Expression = {
+            $entries = $organizedData[$panelKey][$category] | Sort-Object `
+            @{Expression = { $_.SortOrder }},`
+            @{Expression = {
                 switch ($_.Type) {
                     'Button' { 1 }
                     'Combobox' { 2 }
