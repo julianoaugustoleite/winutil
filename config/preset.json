@@ -1,23 +1,33 @@
 {
-  "Standard": [
+  "Game Profile": [
     "WPFTweaksActivity",
     "WPFTweaksConsumerFeatures",
     "WPFTweaksDisableExplorerAutoDiscovery",
-    "WPFTweaksWPBT",
-    "WPFTweaksDVR",
-    "WPFTweaksLocation",
-    "WPFTweaksServices",
+    "WPFTweaksHiber",
+    "WPFTweaksPowershell7Tele",
     "WPFTweaksTelemetry",
-    "WPFTweaksDiskCleanup",
-    "WPFTweaksDeleteTempFiles",
-    "WPFTweaksEndTaskOnTaskbar",
-    "WPFTweaksRestorePoint",
-    "WPFTweaksPowershell7Tele"
-  ],
-  "Minimal": [
-    "WPFTweaksConsumerFeatures",
     "WPFTweaksWPBT",
+    "WPFTweaksEndTaskOnTaskbar",
+    "WPFTweaksGamer",
     "WPFTweaksServices",
-    "WPFTweaksTelemetry"
+    "WPFTweaksDisableIPv6",
+    "WPFTweaksRemoveCopilot",
+    "WPFTweaksTeredo",
+    "WPFTweaksEdgeDebloat",
+    "WPFTweaksRightClickMenu"
+  ],
+  "Laptop Profile": [
+    "WPFTweaksActivity",
+    "WPFTweaksConsumerFeatures",
+    "WPFTweaksDisableExplorerAutoDiscovery",
+    "WPFTweaksHiber",
+    "WPFTweaksPowershell7Tele",
+    "WPFTweaksTelemetry",
+    "WPFTweaksWPBT",
+    "WPFTweaksEndTaskOnTaskbar",
+    "WPFTweaksServices",
+    "WPFTweaksDisableIPv6",
+    "WPFTweaksRemoveCopilot",
+    "WPFTweaksRightClickMenu"
   ]
 }

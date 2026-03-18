@@ -3,7 +3,7 @@
     Author         : BM Infotech
     Runspace Author: @brunomonteirobm_
     GitHub         : https://www.bminfotech.com.br/
-    Version        : 26.03.17
+    Version        : 26.03.18
 #>
 
 param (
@@ -73,7 +73,7 @@ Add-Type -AssemblyName System.Windows.Forms
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "26.03.17"
+$sync.version = "26.03.18"
 $sync.configs = @{}
 $sync.Buttons = [System.Collections.Generic.List[PSObject]]::new()
 $sync.preferences = @{}
@@ -4598,8 +4598,8 @@ function Invoke-WPFButton {
         "WPFInstallUpgrade" {Invoke-WPFInstallUpgrade}
         "WPFCollapseAllCategories" {Invoke-WPFToggleAllCategories -Action "Collapse"}
         "WPFExpandAllCategories" {Invoke-WPFToggleAllCategories -Action "Expand"}
-        "WPFStandard" {Invoke-WPFPresets "Standard" -checkboxfilterpattern "WPFTweak*"}
-        "WPFMinimal" {Invoke-WPFPresets "Minimal" -checkboxfilterpattern "WPFTweak*"}
+        "WPFStandard" {Invoke-WPFPresets "Game Profile" -checkboxfilterpattern "WPFTweak*"}
+        "WPFMinimal" {Invoke-WPFPresets "Laptop Profile" -checkboxfilterpattern "WPFTweak*"}
         "WPFClearTweaksSelection" {Invoke-WPFPresets -imported $true -checkboxfilterpattern "WPFTweak*"}
         "WPFClearInstallSelection" {Invoke-WPFPresets -imported $true -checkboxfilterpattern "WPFInstall*"}
         "WPFtweaksbutton" {Invoke-WPFtweaksbutton}
@@ -10446,26 +10446,36 @@ $sync.configs.feature = @'
 '@ | ConvertFrom-Json
 $sync.configs.preset = @'
 {
-  "Standard": [
+  "Game Profile": [
     "WPFTweaksActivity",
     "WPFTweaksConsumerFeatures",
     "WPFTweaksDisableExplorerAutoDiscovery",
-    "WPFTweaksWPBT",
-    "WPFTweaksDVR",
-    "WPFTweaksLocation",
-    "WPFTweaksServices",
+    "WPFTweaksHiber",
+    "WPFTweaksPowershell7Tele",
     "WPFTweaksTelemetry",
-    "WPFTweaksDiskCleanup",
-    "WPFTweaksDeleteTempFiles",
-    "WPFTweaksEndTaskOnTaskbar",
-    "WPFTweaksRestorePoint",
-    "WPFTweaksPowershell7Tele"
-  ],
-  "Minimal": [
-    "WPFTweaksConsumerFeatures",
     "WPFTweaksWPBT",
+    "WPFTweaksEndTaskOnTaskbar",
+    "WPFTweaksGamer",
     "WPFTweaksServices",
-    "WPFTweaksTelemetry"
+    "WPFTweaksDisableIPv6",
+    "WPFTweaksRemoveCopilot",
+    "WPFTweaksTeredo",
+    "WPFTweaksEdgeDebloat",
+    "WPFTweaksRightClickMenu"
+  ],
+  "Laptop Profile": [
+    "WPFTweaksActivity",
+    "WPFTweaksConsumerFeatures",
+    "WPFTweaksDisableExplorerAutoDiscovery",
+    "WPFTweaksHiber",
+    "WPFTweaksPowershell7Tele",
+    "WPFTweaksTelemetry",
+    "WPFTweaksWPBT",
+    "WPFTweaksEndTaskOnTaskbar",
+    "WPFTweaksServices",
+    "WPFTweaksDisableIPv6",
+    "WPFTweaksRemoveCopilot",
+    "WPFTweaksRightClickMenu"
   ]
 }
 '@ | ConvertFrom-Json
@@ -13994,8 +14004,8 @@ $inputXML = @'
                             <StackPanel Background="{DynamicResource MainBackgroundColor}" Orientation="Vertical" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="5">
                                 <Label Content="Recommended Selections:" FontSize="{DynamicResource FontSize}" VerticalAlignment="Center" Margin="2"/>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,2,0,0">
-                                    <Button Name="WPFstandard" Content=" Standard " Margin="2" Width="{DynamicResource ButtonWidth}" Height="{DynamicResource ButtonHeight}"/>
-                                    <Button Name="WPFminimal" Content=" Minimal " Margin="2" Width="{DynamicResource ButtonWidth}" Height="{DynamicResource ButtonHeight}"/>
+                                    <Button Name="WPFstandard" Content=" Game Profile " Margin="2" Width="{DynamicResource ButtonWidth}" Height="{DynamicResource ButtonHeight}"/>
+                                    <Button Name="WPFminimal" Content=" Laptop Profile " Margin="2" Width="{DynamicResource ButtonWidth}" Height="{DynamicResource ButtonHeight}"/>
                                     <Button Name="WPFClearTweaksSelection" Content=" Clear " Margin="2" Width="{DynamicResource ButtonWidth}" Height="{DynamicResource ButtonHeight}"/>
                                     <Button Name="WPFGetInstalledTweaks" Content=" Get Installed Tweaks " Margin="2" Width="{DynamicResource ButtonWidth}" Height="{DynamicResource ButtonHeight}"/>
                                 </StackPanel>
@@ -15266,7 +15276,6 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {$sync["$("$($psitem.Name)")"] 
 # Ocultar abas que o cliente nao deve ver
 $ocultarAbaInstall = $true
 $ocultarAbaWin11Creator = $true
-$ocultarAbaStandard = $true
 $ocultarAbainstalledtweaks = $true
 if ($ocultarAbaInstall -and $sync.WPFTab1BT) {
     $sync.WPFTab1BT.Visibility = [System.Windows.Visibility]::Collapsed
@@ -15277,9 +15286,6 @@ if ($ocultarAbaWin11Creator -and $sync.WPFTab5BT) {
 }
 
 # Ocultar botoes da aba Tweaks
-if ($ocultarAbaStandard -and $sync.WPFstandard) {
-    $sync.WPFstandard.Visibility = [System.Windows.Visibility]::Collapsed
-}
 
 if ($ocultarAbainstalledtweaks -and $sync.WPFGetInstalledTweaks) {
     $sync.WPFGetInstalledTweaks.Visibility = [System.Windows.Visibility]::Collapsed

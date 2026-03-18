@@ -320,7 +320,6 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {$sync["$("$($psitem.Name)")"] 
 # Ocultar abas que o cliente nao deve ver
 $ocultarAbaInstall = $true
 $ocultarAbaWin11Creator = $true
-$ocultarAbaStandard = $true
 $ocultarAbainstalledtweaks = $true
 if ($ocultarAbaInstall -and $sync.WPFTab1BT) {
     $sync.WPFTab1BT.Visibility = [System.Windows.Visibility]::Collapsed
@@ -331,9 +330,6 @@ if ($ocultarAbaWin11Creator -and $sync.WPFTab5BT) {
 }
 
 # Ocultar botoes da aba Tweaks
-if ($ocultarAbaStandard -and $sync.WPFstandard) {
-    $sync.WPFstandard.Visibility = [System.Windows.Visibility]::Collapsed
-}
 
 if ($ocultarAbainstalledtweaks -and $sync.WPFGetInstalledTweaks) {
     $sync.WPFGetInstalledTweaks.Visibility = [System.Windows.Visibility]::Collapsed
