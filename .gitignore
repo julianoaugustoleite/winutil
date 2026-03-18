@@ -41,6 +41,10 @@ Microsoft.PowerShell.ConsoleHost.dll
 # Compressed files
 *.zip
 
+# Permitir downloads para distribuicao
+!downloads/
+!downloads/*.zip
+
 ### MacOS ###
 
 # General
