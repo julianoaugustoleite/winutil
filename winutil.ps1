@@ -4606,6 +4606,10 @@ function Invoke-WPFButton {
         "WPFOOSUbutton" {Invoke-WPFOOSU}
         "WPFAddUltPerf" {Invoke-WPFUltimatePerformance -State "Enable"}
         "WPFRemoveUltPerf" {Invoke-WPFUltimatePerformance -State "Disable"}
+
+        "WPFDownloadPacote1" { Invoke-WPFDownloadZip -Url "https://seudominio.com.br/pacote1.zip" -FileName "Pacote1.zip" }
+        "WPFDownloadPacote2" { Invoke-WPFDownloadZip -Url "https://seudominio.com.br/pacote2.zip" -FileName "Pacote2.zip" }
+
         "WPFundoall" {Invoke-WPFundoall}
         "WPFUpdatesdefault" {Invoke-WPFUpdatesdefault}
         "WPFRunAdobeCCCleanerTool" {Invoke-WPFRunAdobeCCCleanerTool}
@@ -4623,6 +4627,33 @@ function Invoke-WPFButton {
                  $sync.Form.Resources["FOSSColor"] = $sync.Form.Resources["MainForegroundColor"]
             }
         }
+    }
+}
+function Invoke-WPFDownloadZip {
+    param(
+        [string]$Url,
+        [string]$FileName
+    )
+
+    try {
+        $destino = Join-Path $env:USERPROFILE "Downloads\$FileName"
+
+        Invoke-WebRequest -Uri $Url -OutFile $destino -UseBasicParsing
+
+        [System.Windows.MessageBox]::Show(
+            "Download concluido:`n$destino",
+            "BM InfoTech",
+            [System.Windows.MessageBoxButton]::OK,
+            [System.Windows.MessageBoxImage]::Information
+        )
+    }
+    catch {
+        [System.Windows.MessageBox]::Show(
+            "Falha ao baixar o arquivo:`n$($_.Exception.Message)",
+            "BM InfoTech",
+            [System.Windows.MessageBoxButton]::OK,
+            [System.Windows.MessageBoxImage]::Error
+        )
     }
 }
 function Invoke-WPFFeatureInstall {
@@ -12343,6 +12374,22 @@ $sync.configs.tweaks = @'
     "Type": "Button",
     "ButtonWidth": "300",
     "link": "https://winutil.christitus.com/dev/tweaks/performance-plans/removeultperf"
+  },
+  "WPFDownloadPacote1": {
+    "Content": "Download Installers",
+    "category": "Performance Plans",
+    "panel": "2",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "link": "https://seudominio.com.br/installers.zip"
+  },
+  "WPFDownloadPacote2": {
+    "Content": "Download Softwares",
+    "category": "Performance Plans",
+    "panel": "2",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "link": "https://seudominio.com.br/softtware.zip"
   },
   "WPFTweaksDisableExplorerAutoDiscovery": {
     "Content": "Disable Explorer Automatic Folder Discovery",

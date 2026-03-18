@@ -1866,6 +1866,24 @@
     "ButtonWidth": "300",
     "link": "https://winutil.christitus.com/dev/tweaks/performance-plans/removeultperf"
   },
+
+  "WPFDownloadPacote1": {
+  "Content": "Download Installers",
+  "category": "Performance Plans",
+  "panel": "2",
+  "Type": "Button",
+  "ButtonWidth": "300",
+  "link": "https://seudominio.com.br/installers.zip"
+},
+"WPFDownloadPacote2": {
+  "Content": "Download Softwares",
+  "category": "Performance Plans",
+  "panel": "2",
+  "Type": "Button",
+  "ButtonWidth": "300",
+  "link": "https://seudominio.com.br/softtware.zip"
+},
+
   "WPFTweaksDisableExplorerAutoDiscovery": {
     "Content": "Disable Explorer Automatic Folder Discovery",
     "Description": "Windows Explorer automatically tries to guess the type of the folder based on its contents, slowing down the browsing experience. WARNING! Will disable File Explorer grouping.",
