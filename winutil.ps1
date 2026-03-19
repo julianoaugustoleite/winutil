@@ -12303,7 +12303,7 @@ $sync.configs.tweaks = @'
     "ButtonWidth": "300"
   },
   "WPFDownloadPacote1": {
-    "Content": "Download Installers",
+    "Content": "Installers",
     "category": "3__Downloads",
     "panel": "2",
     "Type": "Button",
@@ -12312,7 +12312,7 @@ $sync.configs.tweaks = @'
     "link": "https://bminfotech.com.br/bmfiles/Installers/installers.zip"
   },
   "WPFDownloadPacote2": {
-    "Content": "Download Softwares",
+    "Content": "Softwares",
     "category": "3__Downloads",
     "panel": "2",
     "Type": "Button",
@@ -12321,7 +12321,7 @@ $sync.configs.tweaks = @'
     "link": "https://bminfotech.com.br/bmfiles/Installers/softwares.zip"
   },
   "WPFDownloadPacote3": {
-    "Content": "Download DDU",
+    "Content": "DDU",
     "category": "3__Downloads",
     "panel": "2",
     "Type": "Button",
@@ -12330,7 +12330,7 @@ $sync.configs.tweaks = @'
     "link": "https://bminfotech.com.br/bmfiles/Installers/DDU.zip"
   },
   "WPFDownloadPacote4": {
-    "Content": "Download NvInstall",
+    "Content": "NvInstall",
     "category": "3__Downloads",
     "panel": "2",
     "Type": "Button",
@@ -12339,7 +12339,7 @@ $sync.configs.tweaks = @'
     "link": "https://bminfotech.com.br/bmfiles/Installers/NvInstall.exe"
   },
   "WPFDownloadPacote5": {
-    "Content": "Download MiniTool",
+    "Content": "MiniTool",
     "category": "3__Downloads",
     "panel": "2",
     "Type": "Button",
@@ -12348,7 +12348,7 @@ $sync.configs.tweaks = @'
     "link": "https://bminfotech.com.br/bmfiles/Installers/MiniTool_portable.zip"
   },
   "WPFDownloadPacote6": {
-    "Content": "Download HWiNFO64",
+    "Content": "HWiNFO64",
     "category": "3__Downloads",
     "panel": "2",
     "Type": "Button",

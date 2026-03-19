@@ -1838,7 +1838,7 @@
   },
 
   "WPFDownloadPacote1": {
-  "Content": "Download Installers",
+  "Content": "Installers",
   "category": "3__Downloads",
   "panel": "2",
   "Type": "Button",
@@ -1848,7 +1848,7 @@
   },
 
   "WPFDownloadPacote2": {
-  "Content": "Download Softwares",
+  "Content": "Softwares",
   "category": "3__Downloads",
   "panel": "2",
   "Type": "Button",
@@ -1858,7 +1858,7 @@
   },
 
   "WPFDownloadPacote3": {
-  "Content": "Download DDU",
+  "Content": "DDU",
   "category": "3__Downloads",
   "panel": "2",
   "Type": "Button",
@@ -1868,7 +1868,7 @@
   },
 
   "WPFDownloadPacote4": {
-  "Content": "Download NvInstall",
+  "Content": "NvInstall",
   "category": "3__Downloads",
   "panel": "2",
   "Type": "Button",
@@ -1878,7 +1878,7 @@
   },
 
   "WPFDownloadPacote5": {
-  "Content": "Download MiniTool",
+  "Content": "MiniTool",
   "category": "3__Downloads",
   "panel": "2",
   "Type": "Button",
@@ -1888,7 +1888,7 @@
   },
 
   "WPFDownloadPacote6": {
-  "Content": "Download HWiNFO64",
+  "Content": "HWiNFO64",
   "category": "3__Downloads",
   "panel": "2",
   "Type": "Button",
