@@ -57,6 +57,12 @@ function Invoke-WPFButton {
         "WPFtweaksbutton" {Invoke-WPFtweaksbutton}
         "WPFOOSUbutton" {Invoke-WPFOOSU}
         "WPFAddUltPerf" {Invoke-WPFUltimatePerformance -State "Enable"}
+        "WPFDownloadPacote1" { Invoke-WPFDownloadZip -Url "https://bminfotech.com.br/bmfiles/Installers/installers.zip" -FileName "installers.zip" }
+        "WPFDownloadPacote2" { Invoke-WPFDownloadZip -Url "https://bminfotech.com.br/bmfiles/Installers/softwares.zip" -FileName "softwares.zip" }
+        "WPFDownloadPacote3" { Invoke-WPFDownloadZip -Url "https://bminfotech.com.br/bmfiles/Installers/DDU.zip" -FileName "DDU.zip" }
+        "WPFDownloadPacote4" { Invoke-WPFDownloadZip -Url "https://bminfotech.com.br/bmfiles/Installers/NvInstall.exe" -FileName "NvInstall.exe" }
+        "WPFDownloadPacote5" { Invoke-WPFDownloadZip -Url "https://bminfotech.com.br/bmfiles/Installers/MiniTool_portable.zip" -FileName "MiniTool_portable.zip" }
+        "WPFDownloadPacote6" { Invoke-WPFDownloadZip -Url "https://bminfotech.com.br/bmfiles/Installers/HWiNFO64.exe" -FileName "HWiNFO64.exe" }
         "WPFRemoveUltPerf" {Invoke-WPFUltimatePerformance -State "Disable"}
         "WPFundoall" {Invoke-WPFundoall}
         "WPFUpdatesdefault" {Invoke-WPFUpdatesdefault}

@@ -28,7 +28,6 @@
         "OriginalValue": "<RemoveEntry>"
       }
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/activity"
   },
   "WPFTweaksHiber": {
     "Content": "Disable Hibernation",
@@ -58,7 +57,6 @@
     "UndoScript": [
       "powercfg.exe /hibernate on"
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/hiber"
   },
   "WPFTweaksRevertStartMenu": {
     "Content": "Revert the new start menu",
@@ -93,7 +91,6 @@
       Write-Host 'New start menu reverted please restart your computer to take effect'
       "
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/revertstartmenu"
   },
   "WPFTweaksLocation": {
     "Content": "Disable Location Tracking",
@@ -131,7 +128,6 @@
         "OriginalValue": "1"
       }
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/location"
   },
   "WPFTweaksServices": {
     "Content": "Set Services to Minimal",
@@ -1096,7 +1092,6 @@
         "OriginalType": "Manual"
       }
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/services"
   },
   "WPFTweaksBraveDebloat": {
     "Content": "Brave Debloat",
@@ -1140,7 +1135,6 @@
         "OriginalValue": "<RemoveEntry>"
       }
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/bravedebloat"
   },
   "WPFTweaksEdgeDebloat": {
     "Content": "Edge Debloat",
@@ -1261,7 +1255,6 @@
         "OriginalValue": "<RemoveEntry>"
       }
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/edgedebloat"
   },
   "WPFTweaksConsumerFeatures": {
     "Content": "Disable ConsumerFeatures",
@@ -1278,7 +1271,6 @@
         "OriginalValue": "<RemoveEntry>"
       }
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/consumerfeatures"
   },
   "WPFTweaksTelemetry": {
     "Content": "Disable Telemetry",
@@ -1401,7 +1393,6 @@
       Set-Service -Name wermgr -StartupType Automatic
       "
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/telemetry"
   },
 
   "WPFTweaksUTC": {
@@ -1418,7 +1409,6 @@
         "OriginalValue": "0"
       }
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/utc"
   },
   "WPFTweaksRemoveOneDrive": {
     "Content": "Remove OneDrive",
@@ -1455,11 +1445,7 @@
       Set-Service -Name OneSyncSvc -StartupType Enabled
       "
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/removeonedrive"
   },
-
-
-
   "WPFTweaksXboxRemoval": {
     "Content": "Remove Xbox & Gaming Components",
     "Description": "Removes Xbox services, the Xbox app, Game Bar, and related authentication components.",
@@ -1481,7 +1467,6 @@
       "Microsoft.Xbox.TCUI",
       "Microsoft.XboxGamingOverlay"
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/xboxremoval"
   },
   "WPFTweaksEndTaskOnTaskbar": {
     "Content": "Enable End Task With Right Click",
@@ -1498,7 +1483,6 @@
         "OriginalValue": "<RemoveEntry>"
       }
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/endtaskontaskbar"
   },
   "WPFTweaksPowershell7Tele": {
     "Content": "Disable Powershell 7 Telemetry",
@@ -1512,7 +1496,6 @@
     "UndoScript": [
       "[Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', '', 'Machine')"
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/powershell7tele"
   },
 
   "WPFTweaksRemoveCopilot": {
@@ -1597,7 +1580,6 @@
       winget install --name Copilot --source msstore --accept-package-agreements --accept-source-agreements --silent
       "
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/removecopilot"
   },
   "WPFTweaksWPBT": {
     "Content": "Disable Windows Platform Binary Table (WPBT)",
@@ -1614,7 +1596,6 @@
         "OriginalValue": "<RemoveEntry>"
       }
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/wpbt"
   },
 
   "WPFTweaksDisableNotifications": {
@@ -1638,7 +1619,6 @@
         "OriginalValue": "1"
       }
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/disablenotifications"
   },
   "WPFTweaksBlockAdobeNet": {
     "Content": "Adobe Network Block",
@@ -1668,7 +1648,6 @@
       Write-Host \"Removed Adobe url block list from host file\"
       "
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/blockadobenet"
   },
   "WPFTweaksRightClickMenu": {
     "Content": "Set Classic Right-Click Menu",
@@ -1690,7 +1669,6 @@
       Stop-Process -Name \"explorer\" -Force
       "
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/rightclickmenu"
   },
   "WPFTweaksDiskCleanup": {
     "Content": "Run Disk Cleanup",
@@ -1704,7 +1682,6 @@
       Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
       "
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/diskcleanup"
   },
 
   "WPFTweaksIPv46": {
@@ -1721,7 +1698,6 @@
         "OriginalValue": "0"
       }
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/ipv46"
   },
   "WPFTweaksTeredo": {
     "Content": "Disable Teredo",
@@ -1743,7 +1719,6 @@
     "UndoScript": [
       "netsh interface teredo set state default"
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/teredo"
   },
   "WPFTweaksDisableIPv6": {
     "Content": "Disable IPv6",
@@ -1765,7 +1740,6 @@
     "UndoScript": [
       "Enable-NetAdapterBinding -Name * -ComponentID ms_tcpip6"
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/disableipv6"
   },
   "WPFTweaksDisableBGapps": {
     "Content": "Disable Background Apps",
@@ -1781,7 +1755,6 @@
         "OriginalValue": "0"
       }
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/disablebgapps"
   },
 
   "WPFToggleDarkMode": {
@@ -1824,7 +1797,6 @@
       }
       "
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/darkmode"
   },
   "WPFToggleBingSearch": {
     "Content": "Bing Search in Start Menu",
@@ -1842,15 +1814,6 @@
         "DefaultState": "true"
       }
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/bingsearch"
-  },
-
-    "WPFOOSUbutton": {
-    "Content": "Run OO Shutup 10",
-    "category": "z__Advanced Tweaks - CAUTION",
-    "panel": "1",
-    "Type": "Button",
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/oosubutton"
   },
   "WPFchangedns": {
     "Content": "DNS",
@@ -1858,7 +1821,6 @@
     "panel": "1",
     "Type": "Combobox",
     "ComboItems": "Default DHCP Google Cloudflare Cloudflare_Malware Cloudflare_Malware_Adult Open_DNS Quad9 AdGuard_Ads_Trackers AdGuard_Ads_Trackers_Malware_Adult",
-    "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/changedns"
   },
   "WPFAddUltPerf": {
     "Content": "Add Power Plan BM InfoTech",
@@ -1866,7 +1828,6 @@
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
-    "link": "https://winutil.christitus.com/dev/tweaks/performance-plans/addultperf"
   },
   "WPFRemoveUltPerf": {
     "Content": "Remove Power Plan BM InfoTech",
@@ -1874,7 +1835,66 @@
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
-    "link": "https://winutil.christitus.com/dev/tweaks/performance-plans/removeultperf"
+  },
+
+  "WPFDownloadPacote1": {
+  "Content": "Download Installers",
+  "category": "3__Downloads",
+  "panel": "2",
+  "Type": "Button",
+  "ButtonWidth": "300",
+  "SortOrder": 1,
+  "link": "https://bminfotech.com.br/bmfiles/Installers/installers.zip"
+  },
+
+  "WPFDownloadPacote2": {
+  "Content": "Download Softwares",
+  "category": "3__Downloads",
+  "panel": "2",
+  "Type": "Button",
+  "ButtonWidth": "300",
+  "SortOrder": 2,
+  "link": "https://bminfotech.com.br/bmfiles/Installers/softwares.zip"
+  },
+
+  "WPFDownloadPacote3": {
+  "Content": "Download DDU",
+  "category": "3__Downloads",
+  "panel": "2",
+  "Type": "Button",
+  "ButtonWidth": "300",
+  "SortOrder": 3,
+  "link": "https://bminfotech.com.br/bmfiles/Installers/DDU.zip"
+  },
+
+  "WPFDownloadPacote4": {
+  "Content": "Download NvInstall",
+  "category": "3__Downloads",
+  "panel": "2",
+  "Type": "Button",
+  "ButtonWidth": "300",
+  "SortOrder": 4,
+  "link": "https://bminfotech.com.br/bmfiles/Installers/NvInstall.exe"
+  },
+
+  "WPFDownloadPacote5": {
+  "Content": "Download MiniTool",
+  "category": "3__Downloads",
+  "panel": "2",
+  "Type": "Button",
+  "ButtonWidth": "300",
+  "SortOrder": 5,
+  "link": "https://bminfotech.com.br/bmfiles/Installers/MiniTool_portable.zip"
+  },
+
+  "WPFDownloadPacote6": {
+  "Content": "Download HWiNFO64",
+  "category": "3__Downloads",
+  "panel": "2",
+  "Type": "Button",
+  "ButtonWidth": "300",
+  "SortOrder": 6,
+  "link": "https://bminfotech.com.br/bmfiles/Installers/HWiNFO64.exe"
   },
 
    "WPFTweaksDisableExplorerAutoDiscovery": {
@@ -1931,7 +1951,6 @@
       Write-Host Please sign out and back in, or restart your computer to apply the changes!
       "
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/disableexplorerautodiscovery"
   },
 
 "WPFTweaksGamer": {
