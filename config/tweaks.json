@@ -1897,6 +1897,52 @@
   "link": "https://bminfotech.com.br/bmfiles/Installers/HWiNFO64.exe"
   },
 
+  "WPFNvidiaResetSettings": {
+    "Content": "Reset",
+    "category": "4__Tweaks Nvidia",
+    "panel": "2",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "SortOrder": 1,
+    "function": "Invoke-WPFNvidiaResetSettings"
+  },
+  "WPFNvidiaImportProfile": {
+    "Content": "Import Profile",
+    "category": "4__Tweaks Nvidia",
+    "panel": "2",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "SortOrder": 2,
+    "function": "Invoke-WPFNvidiaImportProfile"
+  },
+  "WPFNvidiaRegFull": {
+    "Content": "Full",
+    "category": "4__Tweaks Nvidia",
+    "panel": "2",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "SortOrder": 3,
+    "function": "Invoke-WPFNvidiaRegFull"
+  },
+  "WPFNvidiaRegSimple": {
+    "Content": "Simple",
+    "category": "4__Tweaks Nvidia",
+    "panel": "2",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "SortOrder": 4,
+    "function": "Invoke-WPFNvidiaRegSimple"
+  },
+  "WPFNvidiaRegRemove": {
+    "Content": "Remove",
+    "category": "4__Tweaks Nvidia",
+    "panel": "2",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "SortOrder": 5,
+    "function": "Invoke-WPFNvidiaRegRemove"
+  },
+
    "WPFTweaksDisableExplorerAutoDiscovery": {
     "Content": "Disable Explorer Automatic Folder Discovery",
     "Description": "Windows Explorer automatically tries to guess the type of the folder based on its contents, slowing down the browsing experience. WARNING! Will disable File Explorer grouping.",
