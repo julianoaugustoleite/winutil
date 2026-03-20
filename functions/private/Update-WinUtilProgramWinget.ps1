@@ -11,7 +11,8 @@ Function Update-WinUtilProgramWinget {
 
         $host.ui.RawUI.WindowTitle = """Winget Install"""
 
-        Start-Transcript "$logdir\winget-update_$dateTime.log" -Append
+        # Start-Transcript "$logdir\winget-update_$dateTime.log" -Append
+        # winget upgrade --all --accept-source-agreements --accept-package-agreements --scope=machine --silent
         winget upgrade --all --accept-source-agreements --accept-package-agreements --scope=machine --silent
 
     }

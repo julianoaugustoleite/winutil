@@ -222,7 +222,7 @@ if ($PARAM_NOUI) {
         $sync.runspace.Dispose()
         $sync.runspace.Close()
         [System.GC]::Collect()
-        Stop-Transcript
+        #Stop-Transcript
         exit 1
     }
     else {
@@ -230,7 +230,7 @@ if ($PARAM_NOUI) {
         $sync.runspace.Dispose()
         $sync.runspace.Close()
         [System.GC]::Collect()
-        Stop-Transcript
+        #Stop-Transcript
         exit 1
     }
 }
@@ -716,4 +716,4 @@ $sync["WPFWin11ISOCleanResetButton"].Add_Click({
 # ──────────────────────────────────────────────────────────────────────────────
 
 $sync["Form"].ShowDialog() | out-null
-Stop-Transcript
+#Stop-Transcript

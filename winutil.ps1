@@ -3,7 +3,7 @@
     Author         : BM Infotech
     Runspace Author: @brunomonteirobm_
     GitHub         : https://www.bminfotech.com.br/
-    Version        : 26.03.19
+    Version        : 26.03.20
 #>
 
 param (
@@ -73,7 +73,7 @@ Add-Type -AssemblyName System.Windows.Forms
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "26.03.19"
+$sync.version = "26.03.20"
 $sync.configs = @{}
 $sync.Buttons = [System.Collections.Generic.List[PSObject]]::new()
 $sync.preferences = @{}
@@ -89,12 +89,16 @@ $sync.selectedAppsPopup
 $dateTime = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
 
 # Set the path for the winutil directory
-$winutildir = "$env:LocalAppData\winutil"
-New-Item $winutildir -ItemType Directory -Force | Out-Null
+# $winutildir = "$env:LocalAppData\winutil"
+# New-Item $winutildir -ItemType Directory -Force | Out-Null
 
-$logdir = "$winutildir\logs"
-New-Item $logdir -ItemType Directory -Force | Out-Null
-Start-Transcript -Path "$logdir\winutil_$dateTime.log" -Append -NoClobber | Out-Null
+#$logdir = "$winutildir\logs"
+# New-Item $logdir -ItemType Directory -Force | Out-Null
+# Start-Transcript -Path "$logdir\winutil_$dateTime.log" -Append -NoClobber | Out-Null
+
+# Logs desabilitados
+$winutildir = $null
+$logdir = $null
 
 # Set PowerShell window title
 $Host.UI.RawUI.WindowTitle = "BM InfoTech (Admin)"
@@ -4302,7 +4306,8 @@ Function Update-WinUtilProgramWinget {
 
         $host.ui.RawUI.WindowTitle = """Winget Install"""
 
-        Start-Transcript "$logdir\winget-update_$dateTime.log" -Append
+        # Start-Transcript "$logdir\winget-update_$dateTime.log" -Append
+        # winget upgrade --all --accept-source-agreements --accept-package-agreements --scope=machine --silent
         winget upgrade --all --accept-source-agreements --accept-package-agreements --scope=machine --silent
 
     }
@@ -15191,7 +15196,7 @@ if ($PARAM_NOUI) {
         $sync.runspace.Dispose()
         $sync.runspace.Close()
         [System.GC]::Collect()
-        Stop-Transcript
+        #Stop-Transcript
         exit 1
     }
     else {
@@ -15199,7 +15204,7 @@ if ($PARAM_NOUI) {
         $sync.runspace.Dispose()
         $sync.runspace.Close()
         [System.GC]::Collect()
-        Stop-Transcript
+        #Stop-Transcript
         exit 1
     }
 }
@@ -15685,4 +15690,4 @@ $sync["WPFWin11ISOCleanResetButton"].Add_Click({
 # ??????????????????????????????????????????????????????????????????????????????
 
 $sync["Form"].ShowDialog() | out-null
-Stop-Transcript
+#Stop-Transcript

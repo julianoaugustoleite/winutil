@@ -89,12 +89,16 @@ $sync.selectedAppsPopup
 $dateTime = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
 
 # Set the path for the winutil directory
-$winutildir = "$env:LocalAppData\winutil"
-New-Item $winutildir -ItemType Directory -Force | Out-Null
+# $winutildir = "$env:LocalAppData\winutil"
+# New-Item $winutildir -ItemType Directory -Force | Out-Null
 
-$logdir = "$winutildir\logs"
-New-Item $logdir -ItemType Directory -Force | Out-Null
-Start-Transcript -Path "$logdir\winutil_$dateTime.log" -Append -NoClobber | Out-Null
+#$logdir = "$winutildir\logs"
+# New-Item $logdir -ItemType Directory -Force | Out-Null
+# Start-Transcript -Path "$logdir\winutil_$dateTime.log" -Append -NoClobber | Out-Null
+
+# Logs desabilitados
+$winutildir = $null
+$logdir = $null
 
 # Set PowerShell window title
 $Host.UI.RawUI.WindowTitle = "BM InfoTech (Admin)"
