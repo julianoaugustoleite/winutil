@@ -15045,7 +15045,7 @@ $sync.configs.applications.PSObject.Properties | ForEach-Object {
 }
 
 # =====================================================
-# BM INFOTECH - SISTEMA DE AUTENTICACAO E LOG
+# BM INFOTECH - SISTEMA DE AUTENTICACAO
 # =====================================================
 
 $senhaCorreta = "bm2026"
@@ -15075,29 +15075,6 @@ catch {
 }
 
 # =====================================================
-# CONFIGURACAO DE LOG
-# =====================================================
-
-#$logDir = "$env:ProgramData\BMInfotech"$logFile = Join-Path $logDir "bm_winutil_access.log"
-
-#if (-not (Test-Path $logDir)) {
-#    New-Item -Path $logDir -ItemType Directory -Force | Out-Null
-#}
-
-#function Write-BMLog {
-#    param([string]$Mensagem)
-
-#    $timestamp = Get-Date -Format "dd/MM/yyyy HH:mm:ss"
-#    Add-Content -Path $logFile -Value "[$timestamp] $Mensagem"
-#}
-
-# Guardar dados no objeto global para outras fun??es
-#$sync.nomeComputador = $nomeComputador
-#$sync.usuarioAtual = $usuarioAtual
-#$sync.ipLocal = $ipLocal
-#$sync.versaoWinutil = $versaoWinutil
-
-# =====================================================
 # CABECALHO
 # =====================================================
 
@@ -15111,8 +15088,6 @@ Write-Host "IP Local   : $ipLocal" -ForegroundColor Gray
 Write-Host "Versao     : $versaoWinutil" -ForegroundColor Gray
 Write-Host "Data/Hora  : $dataHora" -ForegroundColor Gray
 Write-Host ""
-
-#Write-BMLog "INICIO | Computador=$nomeComputador | Usuario=$usuarioAtual | IP=$ipLocal | Versao=$versaoWinutil"
 
 # =====================================================
 # LOOP DE AUTENTICACAO
@@ -15129,24 +15104,18 @@ while (($tentativa -lt $tentativasMax) -and (-not $acessoLiberado)) {
 
         $acessoLiberado = $true
 
-        #Write-BMLog "ACESSO AUTORIZADO | Computador=$nomeComputador | Usuario=$usuarioAtual | IP=$ipLocal | Versao=$versaoWinutil"
-
     }
     else {
 
         $tentativa++
         $restantes = $tentativasMax - $tentativa
 
-        Write-BMLog "SENHA INCORRETA | Tentativa=$tentativa | Restantes=$restantes | Computador=$nomeComputador | Usuario=$usuarioAtual | IP=$ipLocal"
-
         Write-Host ""
 
         if ($restantes -gt 0) {
-
             Write-Host "Senha incorreta. Tentativas restantes: $restantes" -ForegroundColor Red
             Write-Host "Aguarde 2 segundos para tentar novamente..." -ForegroundColor Yellow
             Start-Sleep -Seconds 2
-
         }
 
         Write-Host ""
@@ -15158,8 +15127,6 @@ while (($tentativa -lt $tentativasMax) -and (-not $acessoLiberado)) {
 # =====================================================
 
 if (-not $acessoLiberado) {
-
-    Write-BMLog "ACESSO BLOQUEADO | Excesso de tentativas | Computador=$nomeComputador | Usuario=$usuarioAtual | IP=$ipLocal"
 
     Write-Host "Numero maximo de tentativas atingido. Encerrando..." -ForegroundColor Red
     Start-Sleep -Seconds 2
@@ -15175,6 +15142,7 @@ Write-Host "Acesso autorizado. Iniciando BM Infotech Windows Toolbox..." -Foregr
 Write-Host ""
 
 Start-Sleep -Seconds 1
+
 
 # ==========================
 # FIM BM INFOTECH ACCESS CHECK
@@ -15566,11 +15534,11 @@ $NavLogoPanel = $sync["Form"].FindName("NavLogoPanel")
 $NavLogoPanel.Children.Add((Invoke-WinUtilAssets -Type "logo" -Size 25)) | Out-Null
 
 
-if (Test-Path "$winutildir\logo.ico") {
-    $sync["logorender"] = "$winutildir\logo.ico"
-} else {
-    $sync["logorender"] = (Invoke-WinUtilAssets -Type "Logo" -Size 90 -Render)
-}
+#if (Test-Path "$winutildir\logo.ico") {
+#    $sync["logorender"] = "$winutildir\logo.ico"
+#} else {
+$sync["logorender"] = (Invoke-WinUtilAssets -Type "Logo" -Size 90 -Render)
+#}
 $sync["checkmarkrender"] = (Invoke-WinUtilAssets -Type "checkmark" -Size 512 -Render)
 $sync["warningrender"] = (Invoke-WinUtilAssets -Type "warning" -Size 512 -Render)
 
