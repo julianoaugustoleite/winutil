@@ -163,6 +163,7 @@
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 1,
     "InvokeScript": [
       "control"
     ],
@@ -173,6 +174,7 @@
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 2,
     "InvokeScript": [
       "compmgmt.msc"
     ],
@@ -183,6 +185,7 @@
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 3,
     "InvokeScript": [
       "ncpa.cpl"
     ],
@@ -193,6 +196,7 @@
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 4,
     "InvokeScript": [
       "powercfg.cpl"
     ],
@@ -203,6 +207,7 @@
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 5,
     "InvokeScript": [
       "Start-Process 'shell:::{A8A91A66-3A7D-4424-8D24-04E180695C7A}'"
     ],
@@ -213,6 +218,7 @@
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 6,
     "InvokeScript": [
       "intl.cpl"
     ],
@@ -223,6 +229,7 @@
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 7,
     "InvokeScript": [
       "rstrui.exe"
     ],
@@ -233,6 +240,7 @@
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 8,
     "InvokeScript": [
       "mmsys.cpl"
     ],
@@ -243,6 +251,7 @@
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 9,
     "InvokeScript": [
       "sysdm.cpl"
     ],
@@ -253,8 +262,18 @@
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 10,
     "InvokeScript": [
       "timedate.cpl"
     ],
+  },
+  "WPFInstallPowerShell7": {
+  "Content": "Install PowerShell 7",
+  "category": "Legacy Windows Panels",
+  "panel": "2",
+  "Type": "Button",
+  "ButtonWidth": "300",
+  "SortOrder": 11,
+  "function": "Invoke-WPFInstallPowerShell7"
   }
 }

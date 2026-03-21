@@ -5216,6 +5216,87 @@ function Invoke-WPFInstall {
         $sync.ProcessRunning = $False
     }
 }
+function Invoke-WPFInstallPowerShell7 {
+
+    try {
+
+        # ===============================
+        # Verifica se j? est? instalado
+        # ===============================
+        if (Get-Command pwsh -ErrorAction SilentlyContinue) {
+            [System.Windows.MessageBox]::Show(
+                "PowerShell 7 ja esta instalado neste computador.",
+                "BM InfoTech",
+                [System.Windows.MessageBoxButton]::OK,
+                [System.Windows.MessageBoxImage]::Information
+            ) | Out-Null
+            return
+        }
+
+        # ===============================
+        # Confirma??o do usu?rio
+        # ===============================
+        $confirm = [System.Windows.MessageBox]::Show(
+            "Deseja instalar o PowerShell 7 neste computador?",
+            "BM InfoTech",
+            [System.Windows.MessageBoxButton]::YesNo,
+            [System.Windows.MessageBoxImage]::Question
+        )
+
+        if ($confirm -ne "Yes") { return }
+
+        # ===============================
+        # Tenta instalar via WINGET
+        # ===============================
+        if (Get-Command winget -ErrorAction SilentlyContinue) {
+
+            Start-Process -FilePath "winget" `
+                -ArgumentList "install --id Microsoft.PowerShell --source winget --accept-package-agreements --accept-source-agreements -e" `
+                -Wait -NoNewWindow
+
+            if (Get-Command pwsh -ErrorAction SilentlyContinue) {
+                [System.Windows.MessageBox]::Show(
+                    "PowerShell 7 instalado com sucesso via Winget.",
+                    "BM InfoTech",
+                    [System.Windows.MessageBoxButton]::OK,
+                    [System.Windows.MessageBoxImage]::Information
+                ) | Out-Null
+                return
+            }
+        }
+
+        # ===============================
+        # FALLBACK ? download MSI oficial
+        # ===============================
+        $url = "https://github.com/PowerShell/PowerShell/releases/latest/download/PowerShell-7.4.1-win-x64.msi"
+        $dest = "$env:TEMP\PowerShell7.msi"
+
+        Invoke-WebRequest -Uri $url -OutFile $dest -UseBasicParsing
+
+        Start-Process "msiexec.exe" -ArgumentList "/i `"$dest`" /quiet /norestart" -Wait
+
+        if (Get-Command pwsh -ErrorAction SilentlyContinue) {
+            [System.Windows.MessageBox]::Show(
+                "PowerShell 7 instalado com sucesso.",
+                "BM InfoTech",
+                [System.Windows.MessageBoxButton]::OK,
+                [System.Windows.MessageBoxImage]::Information
+            ) | Out-Null
+        }
+        else {
+            throw "Falha na instalacao."
+        }
+
+    }
+    catch {
+        [System.Windows.MessageBox]::Show(
+            "Erro ao instalar PowerShell 7:`n$($_.Exception.Message)",
+            "BM InfoTech",
+            [System.Windows.MessageBoxButton]::OK,
+            [System.Windows.MessageBoxImage]::Error
+        ) | Out-Null
+    }
+}
 function Invoke-WPFInstallUpgrade {
     <#
 
@@ -10645,6 +10726,7 @@ $sync.configs.feature = @'
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 1,
     "InvokeScript": [
       "control"
     ]
@@ -10655,6 +10737,7 @@ $sync.configs.feature = @'
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 2,
     "InvokeScript": [
       "compmgmt.msc"
     ]
@@ -10665,6 +10748,7 @@ $sync.configs.feature = @'
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 3,
     "InvokeScript": [
       "ncpa.cpl"
     ]
@@ -10675,6 +10759,7 @@ $sync.configs.feature = @'
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 4,
     "InvokeScript": [
       "powercfg.cpl"
     ]
@@ -10685,6 +10770,7 @@ $sync.configs.feature = @'
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 5,
     "InvokeScript": [
       "Start-Process 'shell:::{A8A91A66-3A7D-4424-8D24-04E180695C7A}'"
     ]
@@ -10695,6 +10781,7 @@ $sync.configs.feature = @'
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 6,
     "InvokeScript": [
       "intl.cpl"
     ]
@@ -10705,6 +10792,7 @@ $sync.configs.feature = @'
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 7,
     "InvokeScript": [
       "rstrui.exe"
     ]
@@ -10715,6 +10803,7 @@ $sync.configs.feature = @'
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 8,
     "InvokeScript": [
       "mmsys.cpl"
     ]
@@ -10725,6 +10814,7 @@ $sync.configs.feature = @'
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 9,
     "InvokeScript": [
       "sysdm.cpl"
     ]
@@ -10735,9 +10825,19 @@ $sync.configs.feature = @'
     "panel": "2",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 10,
     "InvokeScript": [
       "timedate.cpl"
     ]
+  },
+  "WPFInstallPowerShell7": {
+    "Content": "Install PowerShell 7",
+    "category": "Legacy Windows Panels",
+    "panel": "2",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "SortOrder": 11,
+    "function": "Invoke-WPFInstallPowerShell7"
   }
 }
 '@ | ConvertFrom-Json
