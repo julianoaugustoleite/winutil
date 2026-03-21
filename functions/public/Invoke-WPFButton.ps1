@@ -63,6 +63,13 @@ function Invoke-WPFButton {
         "WPFDownloadPacote4" { Invoke-WPFDownloadZip -Url "https://bminfotech.com.br/bmfiles/Installers/NvInstall.exe" -FileName "NvInstall.exe" }
         "WPFDownloadPacote5" { Invoke-WPFDownloadZip -Url "https://bminfotech.com.br/bmfiles/Installers/MiniTool_portable.zip" -FileName "MiniTool_portable.zip" }
         "WPFDownloadPacote6" { Invoke-WPFDownloadZip -Url "https://bminfotech.com.br/bmfiles/Installers/HWiNFO64.exe" -FileName "HWiNFO64.exe" }
+
+        "WPFNvidiaResetSettings" { Invoke-WPFNvidiaResetSettings }
+        "WPFNvidiaImportProfile" { Invoke-WPFNvidiaImportProfile }
+        "WPFNvidiaRegFull" { Invoke-WPFNvidiaRegFull }
+        "WPFNvidiaRegSimple" { Invoke-WPFNvidiaRegSimple }
+        "WPFNvidiaRegRemove" { Invoke-WPFNvidiaRegRemove }
+
         "WPFRemoveUltPerf" {Invoke-WPFUltimatePerformance -State "Disable"}
         "WPFundoall" {Invoke-WPFundoall}
         "WPFUpdatesdefault" {Invoke-WPFUpdatesdefault}

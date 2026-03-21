@@ -3,7 +3,7 @@
     Author         : BM Infotech
     Runspace Author: @brunomonteirobm_
     GitHub         : https://www.bminfotech.com.br/
-    Version        : 26.03.20
+    Version        : 26.03.21
 #>
 
 param (
@@ -73,7 +73,7 @@ Add-Type -AssemblyName System.Windows.Forms
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "26.03.20"
+$sync.version = "26.03.21"
 $sync.configs = @{}
 $sync.Buttons = [System.Collections.Generic.List[PSObject]]::new()
 $sync.preferences = @{}
@@ -4616,6 +4616,13 @@ function Invoke-WPFButton {
         "WPFDownloadPacote4" { Invoke-WPFDownloadZip -Url "https://bminfotech.com.br/bmfiles/Installers/NvInstall.exe" -FileName "NvInstall.exe" }
         "WPFDownloadPacote5" { Invoke-WPFDownloadZip -Url "https://bminfotech.com.br/bmfiles/Installers/MiniTool_portable.zip" -FileName "MiniTool_portable.zip" }
         "WPFDownloadPacote6" { Invoke-WPFDownloadZip -Url "https://bminfotech.com.br/bmfiles/Installers/HWiNFO64.exe" -FileName "HWiNFO64.exe" }
+
+        "WPFNvidiaResetSettings" { Invoke-WPFNvidiaResetSettings }
+        "WPFNvidiaImportProfile" { Invoke-WPFNvidiaImportProfile }
+        "WPFNvidiaRegFull" { Invoke-WPFNvidiaRegFull }
+        "WPFNvidiaRegSimple" { Invoke-WPFNvidiaRegSimple }
+        "WPFNvidiaRegRemove" { Invoke-WPFNvidiaRegRemove }
+
         "WPFRemoveUltPerf" {Invoke-WPFUltimatePerformance -State "Disable"}
         "WPFundoall" {Invoke-WPFundoall}
         "WPFUpdatesdefault" {Invoke-WPFUpdatesdefault}
@@ -5365,7 +5372,7 @@ function Confirm-BMAction {
 function Assert-BMNvidiaInstalled {
     if (-not (Test-BMNvidiaDriverInstalled)) {
         Show-BMInfoMessage `
-            -Message "Nenhum driver NVIDIA ativo foi encontrado neste computador.`n`nEssa a??o est? dispon?vel apenas para m?quinas com placa/driver NVIDIA instalado." `
+            -Message "Nenhum driver NVIDIA ativo foi encontrado neste computador.`n`nEssa acao esta disponivel apenas para maquinas com placa/driver NVIDIA instalado." `
             -Title "BM InfoTech - NVIDIA" `
             -Icon ([System.Windows.MessageBoxImage]::Warning)
 
@@ -5390,20 +5397,20 @@ function Invoke-BMNvidiaRegImport {
         }
 
         if (!(Test-Path $RegFile)) {
-            throw "Arquivo n?o encontrado:`n$RegFile"
+            throw "Arquivo nao encontrado:`n$RegFile"
         }
 
         $confirmMessage = @"
-Voc? est? prestes a aplicar o preset NVIDIA:
+Voce esta prestes a aplicar o preset NVIDIA:
 
 $PresetName
 
-Essa a??o altera configura??es do Windows/driver por arquivo .reg.
+Essa acao altera configuracoes do Windows/driver por arquivo .reg.
 
 Deseja continuar?
 "@
 
-        if (-not (Confirm-BMAction -Message $confirmMessage -Title "BM InfoTech - Confirmar aplica??o")) {
+        if (-not (Confirm-BMAction -Message $confirmMessage -Title "BM InfoTech - Confirmar aplicacao")) {
             return
         }
 
@@ -5414,13 +5421,13 @@ Deseja continuar?
         }
 
         Show-BMInfoMessage `
-            -Message "Preset NVIDIA aplicado com sucesso:`n$PresetName`n`nRecomenda??o: execute o bot?o 'Reset NVIDIA' ou reinicie o computador para garantir a recarga completa do driver." `
+            -Message "Preset NVIDIA aplicado com sucesso:`n$PresetName`n`nRecomendacao: execute o botao 'Reset NVIDIA' ou reinicie o computador para garantir a recarga completa do driver." `
             -Title "BM InfoTech - NVIDIA" `
             -Icon ([System.Windows.MessageBoxImage]::Information)
     }
     catch {
         Show-BMInfoMessage `
-            -Message "N?o foi poss?vel aplicar o preset NVIDIA.`n`nDetalhes:`n$($_.Exception.Message)" `
+            -Message "Nao foi possivel aplicar o preset NVIDIA.`n`nDetalhes:`n$($_.Exception.Message)" `
             -Title "BM InfoTech - Erro NVIDIA" `
             -Icon ([System.Windows.MessageBoxImage]::Error)
     }
@@ -5433,12 +5440,12 @@ function Invoke-WPFNvidiaResetSettings {
         }
 
         $confirmMessage = @"
-Voc? est? prestes a resetar as configura??es do driver NVIDIA.
+Voce esta prestes a resetar as configuracoes do driver NVIDIA.
 
-Essa a??o ir?:
+Essa acao ira:
 - remover os bancos de perfis DRS da NVIDIA
-- solicitar a recria??o desses arquivos pelo driver
-- tentar reiniciar o dispositivo de v?deo NVIDIA
+- solicitar a recriacao desses arquivos pelo driver
+- tentar reiniciar o dispositivo de video NVIDIA
 
 Deseja continuar?
 "@
@@ -5457,13 +5464,13 @@ Deseja continuar?
         }
 
         Show-BMInfoMessage `
-            -Message "Reset NVIDIA conclu?do com sucesso.`n`nSe perceber qualquer comportamento diferente, reinicie o computador para finalizar a recarga do driver." `
+            -Message "Reset NVIDIA concluido com sucesso.`n`nSe perceber qualquer comportamento diferente, reinicie o computador para finalizar a recarga do driver." `
             -Title "BM InfoTech - NVIDIA" `
             -Icon ([System.Windows.MessageBoxImage]::Information)
     }
     catch {
         Show-BMInfoMessage `
-            -Message "Falha ao resetar as configura??es da NVIDIA.`n`nDetalhes:`n$($_.Exception.Message)" `
+            -Message "Falha ao resetar as configuracoes da NVIDIA.`n`nDetalhes:`n$($_.Exception.Message)" `
             -Title "BM InfoTech - Erro NVIDIA" `
             -Icon ([System.Windows.MessageBoxImage]::Error)
     }
@@ -5480,15 +5487,15 @@ function Invoke-WPFNvidiaImportProfile {
         $nip = $paths.NipProfile
 
         if (!(Test-Path $npi)) {
-            throw "NVIDIA Profile Inspector n?o encontrado:`n$npi"
+            throw "NVIDIA Profile Inspector nao encontrado:`n$npi"
         }
 
         if (!(Test-Path $nip)) {
-            throw "Perfil .NIP n?o encontrado:`n$nip"
+            throw "Perfil .NIP nao encontrado:`n$nip"
         }
 
         $confirmMessage = @"
-Voc? est? prestes a importar o perfil NVIDIA da BM InfoTech.
+Voce esta prestes a importar o perfil NVIDIA da BM InfoTech.
 
 Arquivo:
 $nip
@@ -5496,7 +5503,7 @@ $nip
 Deseja continuar?
 "@
 
-        if (-not (Confirm-BMAction -Message $confirmMessage -Title "BM InfoTech - Confirmar importa??o")) {
+        if (-not (Confirm-BMAction -Message $confirmMessage -Title "BM InfoTech - Confirmar importacao")) {
             return
         }
 
@@ -5513,7 +5520,7 @@ Deseja continuar?
             Start-Process explorer.exe "/select,`"$nip`""
 
             Show-BMInfoMessage `
-                -Message "O NVIDIA Profile Inspector desta vers?o n?o aceitou a importa??o autom?tica.`n`nO programa foi aberto e o arquivo de perfil foi destacado para importa??o manual." `
+                -Message "O NVIDIA Profile Inspector desta versao nao aceitou a importacao automatica.`n`nO programa foi aberto e o arquivo de perfil foi destacado para importacao manual." `
                 -Title "BM InfoTech - Aten??o NVIDIA" `
                 -Icon ([System.Windows.MessageBoxImage]::Warning)
         }
