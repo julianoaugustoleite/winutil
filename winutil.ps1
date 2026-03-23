@@ -3,7 +3,7 @@
     Author         : BM Infotech
     Runspace Author: @brunomonteirobm_
     GitHub         : https://www.bminfotech.com.br/
-    Version        : 26.03.21
+    Version        : 26.03.23
 #>
 
 param (
@@ -73,7 +73,8 @@ Add-Type -AssemblyName System.Windows.Forms
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "26.03.21"
+$global:BMWinUtilBasePath = $PSScriptRoot
+$sync.version = "26.03.23"
 $sync.configs = @{}
 $sync.Buttons = [System.Collections.Generic.List[PSObject]]::new()
 $sync.preferences = @{}
@@ -5334,6 +5335,11 @@ function Invoke-WPFInstallUpgrade {
     }
 }
 function Get-BMWinUtilBasePath {
+
+    if ($global:BMWinUtilBasePath) {
+        return $global:BMWinUtilBasePath
+    }
+
     if ($sync -and $sync.PSScriptRoot) {
         return $sync.PSScriptRoot
     }
@@ -5346,11 +5352,12 @@ function Get-BMWinUtilBasePath {
         return (Split-Path -Parent $PSCommandPath)
     }
 
-    return (Get-Location).Path
+    throw "Nao foi possivel localizar a pasta base do BM InfoTech Toolbox."
 }
 
 function Get-BMNvidiaPaths {
     $base = Get-BMWinUtilBasePath
+    Write-Host "BM NVIDIA BASE: $base"
 
     @{
         Base       = $base

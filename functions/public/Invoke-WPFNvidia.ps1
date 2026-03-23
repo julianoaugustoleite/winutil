@@ -1,4 +1,9 @@
 function Get-BMWinUtilBasePath {
+
+    if ($global:BMWinUtilBasePath) {
+        return $global:BMWinUtilBasePath
+    }
+
     if ($sync -and $sync.PSScriptRoot) {
         return $sync.PSScriptRoot
     }
@@ -11,11 +16,12 @@ function Get-BMWinUtilBasePath {
         return (Split-Path -Parent $PSCommandPath)
     }
 
-    return (Get-Location).Path
+    throw "Nao foi possivel localizar a pasta base do BM InfoTech Toolbox."
 }
 
 function Get-BMNvidiaPaths {
     $base = Get-BMWinUtilBasePath
+    Write-Host "BM NVIDIA BASE: $base"
 
     @{
         Base       = $base
