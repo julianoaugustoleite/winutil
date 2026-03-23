@@ -3,12 +3,12 @@ param (
     [string]$Arguments
 )
 
-if ((Get-Item ".\winutil.ps1" -ErrorAction SilentlyContinue).IsReadOnly) {
-    Remove-Item ".\winutil.ps1" -Force
+if ((Get-Item ".\bminfotech.ps1" -ErrorAction SilentlyContinue).IsReadOnly) {
+    Remove-Item ".\bminfotech.ps1" -Force
 }
 
 $OFS = "`r`n"
-$scriptname = "winutil.ps1"
+$scriptname = "bminfotech.ps1"
 $workingdir = $PSScriptRoot
 
 # Variable to sync between runspaces
@@ -82,7 +82,6 @@ Get-ChildItem "config" | Where-Object {$psitem.extension -eq ".json"} | ForEach-
         }
     }
 
-    # Line 90 requires no whitespace inside the here-strings, to keep formatting of the JSON in the final script.
     $json = @"
 $($jsonAsObject | ConvertTo-Json -Depth 3)
 "@
@@ -91,12 +90,10 @@ $($jsonAsObject | ConvertTo-Json -Depth 3)
     $script_content.Add($(Write-Output "`$sync.configs.$($psitem.BaseName) = @'`r`n$json`r`n'@ `| ConvertFrom-Json" ))
 }
 
-# Read the entire XAML file as a single string, preserving line breaks
 $xaml = Get-Content "$workingdir\xaml\inputXML.xaml" -Raw
 
 Update-Progress "Adding: Xaml " 90
 
-# Add the XAML content to $script_content using a here-string
 $script_content.Add(@"
 `$inputXML = @'
 $xaml
@@ -105,9 +102,7 @@ $xaml
 
 Update-Progress "Adding: autounattend.xml" 95
 $autounattendRaw = Get-Content "$workingdir\tools\autounattend.xml" -Raw
-# Strip XML comments (<!-- ... -->, including multi-line)
 $autounattendRaw = [regex]::Replace($autounattendRaw, '<!--.*?-->', '', [System.Text.RegularExpressions.RegexOptions]::Singleline)
-# Drop blank lines and trim trailing whitespace per line
 $autounattendXml = ($autounattendRaw -split "`r?`n" |
     Where-Object { $_.Trim() -ne '' } |
     ForEach-Object { $_.TrimEnd() }) -join "`r`n"
@@ -127,11 +122,11 @@ Remove-Item "xaml\inputFeatures.xaml" -ErrorAction SilentlyContinue
 Set-Content -Path "$scriptname" -Value ($script_content -join "`r`n") -Encoding ascii
 Write-Progress -Activity "Compiling" -Completed
 
-Update-Progress -Activity "Validating" -StatusMessage "Checking winutil.ps1 Syntax" -Percent 0
+Update-Progress -Activity "Validating" -StatusMessage "Checking bminfotech.ps1 Syntax" -Percent 0
 try {
-    Get-Command -Syntax .\winutil.ps1 | Out-Null
+    Get-Command -Syntax .\bminfotech.ps1 | Out-Null
 } catch {
-    Write-Warning "Syntax Validation for 'winutil.ps1' has failed"
+    Write-Warning "Syntax Validation for 'bminfotech.ps1' has failed"
     Write-Host "$($Error[0])" -ForegroundColor Red
     exit 1
 }
@@ -139,6 +134,6 @@ Write-Progress -Activity "Validating" -Completed
 
 if ($run) {
     Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-    .\Winutil.ps1 $Arguments
+    .\bminfotech.ps1 $Arguments
     break
 }
