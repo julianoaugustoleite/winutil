@@ -177,7 +177,7 @@ Start-Sleep -Seconds 1
 Set-Preferences
 
 if ($PARAM_NOUI) {
-    Show-CTTLogo
+    #Show-CTTLogo
     if ($PARAM_CONFIG -and -not [string]::IsNullOrWhiteSpace($PARAM_CONFIG)) {
         Write-Host "Running config file tasks..."
         Invoke-WPFImpex -type "import" -Config $PARAM_CONFIG
@@ -227,7 +227,7 @@ try {
 
 if (-NOT ($readerOperationSuccessful)) {
     Write-Host "Failed to parse xaml content using Windows.Markup.XamlReader's Load Method." -ForegroundColor Red
-    Write-Host "Quitting winutil..." -ForegroundColor Red
+    Write-Host "Quitting BMInfoTech..." -ForegroundColor Red
     $sync.runspace.Dispose()
     $sync.runspace.Close()
     [System.GC]::Collect()
@@ -371,7 +371,7 @@ Invoke-WPFRunspace -ScriptBlock {
 #===========================================================================
 
 # Print the logo
-Show-CTTLogo
+#Show-CTTLogo
 
 # Progress bar in taskbaritem > Set-WinUtilProgressbar
 $sync["Form"].TaskbarItemInfo = New-Object System.Windows.Shell.TaskbarItemInfo
@@ -446,7 +446,7 @@ $sync["Form"].Add_MouseDoubleClick({
 })
 
 $sync["Form"].Add_Deactivated({
-    Write-Debug "WinUtil lost focus"
+    Write-Debug "BMInfoTech lost focus"
     Invoke-WPFPopup -Action "Hide" -Popups @("Settings", "FontScaling")
 })
 
