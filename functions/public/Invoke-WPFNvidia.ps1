@@ -137,7 +137,7 @@ function Assert-BMNvidiaInstalled {
 function Invoke-BMNvidiaRegImport {
     param(
         [Parameter(Mandatory = $true)]
-        [string]$RegFile,
+        [string]$RegContent,
 
         [Parameter(Mandatory = $true)]
         [string]$PresetName
@@ -146,10 +146,6 @@ function Invoke-BMNvidiaRegImport {
     try {
         if (-not (Assert-BMNvidiaInstalled)) {
             return
-        }
-
-        if (!(Test-Path $RegFile)) {
-            throw "Arquivo nao encontrado:`n$RegFile"
         }
 
         $confirmMessage = @"
@@ -166,16 +162,7 @@ Deseja continuar?
             return
         }
 
-        & reg.exe import "$RegFile" | Out-Null
-
-        if ($LASTEXITCODE -ne 0) {
-            throw "O Windows retornou erro ao importar o arquivo .reg."
-        }
-
-        Show-BMInfoMessage `
-            -Message "Preset NVIDIA aplicado com sucesso:`n$PresetName`n`nRecomendacao: execute o botao 'Reset NVIDIA' ou reinicie o computador para garantir a recarga completa do driver." `
-            -Title "BM InfoTech - NVIDIA" `
-            -Icon ([System.Windows.MessageBoxImage]::Information)
+        Import-BMEmbeddedRegContent -RegContent $RegContent -PresetName $PresetName
     }
     catch {
         Show-BMInfoMessage `
@@ -229,28 +216,18 @@ Deseja continuar?
 }
 
 function Invoke-WPFNvidiaImportProfile {
+    $npi = $null
+    $nip = $null
+
     try {
         if (-not (Assert-BMNvidiaInstalled)) {
             return
         }
 
-        $paths = Get-BMNvidiaPaths
-        $npi = $paths.NpiExe
-        $nip = $paths.NipProfile
-
-        if (!(Test-Path $npi)) {
-            throw "NVIDIA Profile Inspector nao encontrado:`n$npi"
-        }
-
-        if (!(Test-Path $nip)) {
-            throw "Perfil .NIP nao encontrado:`n$nip"
-        }
-
         $confirmMessage = @"
 Voce esta prestes a importar o perfil NVIDIA da BM InfoTech.
 
-Arquivo:
-$nip
+O utilitario necessario sera baixado temporariamente, executado e removido ao final.
 
 Deseja continuar?
 "@
@@ -258,6 +235,9 @@ Deseja continuar?
         if (-not (Confirm-BMAction -Message $confirmMessage -Title "BM InfoTech - Confirmar importacao")) {
             return
         }
+
+        $npi = Get-BMTempNvidiaProfileInspector
+        $nip = New-BMTempNipFile
 
         & $npi -import $nip 2>$null
         $exitCode = $LASTEXITCODE
@@ -273,7 +253,7 @@ Deseja continuar?
 
             Show-BMInfoMessage `
                 -Message "O NVIDIA Profile Inspector desta versao nao aceitou a importacao automatica.`n`nO programa foi aberto e o arquivo de perfil foi destacado para importacao manual." `
-                -Title "BM InfoTech - Atenção NVIDIA" `
+                -Title "BM InfoTech - Atencao NVIDIA" `
                 -Icon ([System.Windows.MessageBoxImage]::Warning)
         }
         else {
@@ -289,19 +269,388 @@ Deseja continuar?
             -Title "BM InfoTech - Erro NVIDIA" `
             -Icon ([System.Windows.MessageBoxImage]::Error)
     }
+    finally {
+        if ($npi) {
+            Remove-Item $npi -Force -ErrorAction SilentlyContinue
+        }
+
+        if ($nip) {
+            Remove-Item $nip -Force -ErrorAction SilentlyContinue
+        }
+    }
 }
 
 function Invoke-WPFNvidiaRegFull {
-    $paths = Get-BMNvidiaPaths
-    Invoke-BMNvidiaRegImport -RegFile $paths.RegFull -PresetName "Apply GPU Tweaks (FULL)"
+    Invoke-BMNvidiaRegImport `
+        -RegContent (Get-BMEmbeddedRegFull) `
+        -PresetName "Apply GPU Tweaks (FULL)"
 }
 
 function Invoke-WPFNvidiaRegSimple {
-    $paths = Get-BMNvidiaPaths
-    Invoke-BMNvidiaRegImport -RegFile $paths.RegSimple -PresetName "Apply GPU Tweaks (SIMPLE)"
+    Invoke-BMNvidiaRegImport `
+        -RegContent (Get-BMEmbeddedRegSimple) `
+        -PresetName "Apply GPU Tweaks (SIMPLE)"
 }
 
 function Invoke-WPFNvidiaRegRemove {
-    $paths = Get-BMNvidiaPaths
-    Invoke-BMNvidiaRegImport -RegFile $paths.RegRemove -PresetName "Remove GPU Tweaks (GPU Only)"
+    Invoke-BMNvidiaRegImport `
+        -RegContent (Get-BMEmbeddedRegRemove) `
+        -PresetName "Remove GPU Tweaks (GPU Only)"
 }
+
+
+function Get-BMEmbeddedRegFull {
+@'
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Microsoft\GameBar]
+"ShowStartupPanel"=dword:00000000
+"GamePanelStartupTipIndex"=dword:00000003
+"AllowAutoGameMode"=dword:00000000
+"AutoGameModeEnabled"=dword:00000000
+"UseNexusForGameBarEnabled"=dword:00000000
+
+[HKEY_CURRENT_USER\System\GameConfigStore]
+"GameDVR_Enabled"=dword:00000000
+"GameDVR_FSEBehaviorMode"=dword:00000002
+"GameDVR_FSEBehavior"=dword:00000002
+"GameDVR_HonorUserFSEBehaviorMode"=dword:00000001
+"GameDVR_DXGIHonorFSEWindowsCompatible"=dword:00000001
+"GameDVR_EFSEFeatureFlags"=dword:00000000
+"GameDVR_DSEBehavior"=dword:00000002
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\GameDVR]
+"AllowGameDVR"=dword:00000000
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR]
+"AppCaptureEnabled"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters]
+"EnablePrefetcher"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters]
+"EnableSuperfetch"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0000]
+"DisableDynamicPstate"=dword:00000001
+"EnablePerformanceMode"=dword:00000001
+"PerfLevelSrc"=dword:00002222
+"PowerMizerEnable"=dword:00000001
+"PowerMizerLevel"=dword:00000001
+"PowerMizerLevelAC"=dword:00000001
+"PowerMizerDefault"=dword:00000001
+"PowerMizerDefaultAC"=dword:00000001
+"PowerMizerHardLevel"=dword:00000001
+"PowerMizerHardLevelAC"=dword:00000001
+"PP_DisableULPS"=dword:00000001
+"EnableUlps"=dword:00000000
+"EnableUlps_NA"=dword:00000000
+'@
+}
+
+function Get-BMEmbeddedRegSimple {
+@'
+Windows Registry Editor Version 5.00
+
+; --- Restaura GameDVR para o padrão do Windows ---
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\GameDVR]
+"AllowGameDVR"=-
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR]
+"AppCaptureEnabled"=dword:00000001
+
+; --- Restaura Prefetch e Superfetch para o padrão (ativo para boot e apps) ---
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters]
+"EnablePrefetcher"=dword:00000003
+"EnableSuperfetch"=dword:00000003
+
+; --- Remove o valor DisableDynamicPstate mantendo o restante do driver intacto ---
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0000]
+"DisableDynamicPstate"=-
+'@
+}
+
+function Get-BMEmbeddedRegRemove {
+@'
+Windows Registry Editor Version 5.00
+
+; Remove tweaks de GPU adicionados manualmente
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0000]
+"DisableDynamicPstate"=-
+"EnablePerformanceMode"=-
+"PerfLevelSrc"=-
+"PowerMizerEnable"=-
+"PowerMizerLevel"=-
+"PowerMizerLevelAC"=-
+"PowerMizerDefault"=-
+"PowerMizerDefaultAC"=-
+"PowerMizerHardLevel"=-
+"PowerMizerHardLevelAC"=-
+"PP_DisableULPS"=-
+"EnableUlps"=-
+"EnableUlps_NA"=-
+'@
+}
+
+function Get-BMEmbeddedNipProfile {
+@'
+<?xml version="1.0" encoding="utf-16"?>
+<ArrayOfProfile>
+  <Profile>
+    <ProfileName>Base Profile</ProfileName>
+    <Executeables />
+    <Settings>
+      <ProfileSetting>
+        <SettingNameInfo />
+        <SettingID>523190</SettingID>
+        <SettingValue>1</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>Texture filtering - Negative LOD bias</SettingNameInfo>
+        <SettingID>1686376</SettingID>
+        <SettingValue>0</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>Vertical Sync Tear Control</SettingNameInfo>
+        <SettingID>5912412</SettingID>
+        <SettingValue>2525368439</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>Texture filtering - Driver Controlled LOD Bias</SettingNameInfo>
+        <SettingID>6524559</SettingID>
+        <SettingValue>0</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>Preferred refresh rate</SettingNameInfo>
+        <SettingID>6600001</SettingID>
+        <SettingValue>1</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>Ambient Occlusion</SettingNameInfo>
+        <SettingID>6714153</SettingID>
+        <SettingValue>0</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>Maximum pre-rendered frames</SettingNameInfo>
+        <SettingID>8102046</SettingID>
+        <SettingValue>1</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>Enable sample interleaving (MFAA)</SettingNameInfo>
+        <SettingID>10011052</SettingID>
+        <SettingValue>0</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>Vertical Sync</SettingNameInfo>
+        <SettingID>11041231</SettingID>
+        <SettingValue>138504007</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo />
+        <SettingID>12991097</SettingID>
+        <SettingValue>1</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>Texture filtering - Quality</SettingNameInfo>
+        <SettingID>13510289</SettingID>
+        <SettingValue>20</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo />
+        <SettingID>14366803</SettingID>
+        <SettingValue>3</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo />
+        <SettingID>14366808</SettingID>
+        <SettingValue>128</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>Texture filtering - Anisotropic sample optimization</SettingNameInfo>
+        <SettingID>15151633</SettingID>
+        <SettingValue>1</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>Flag to control smooth AFR behavior</SettingNameInfo>
+        <SettingID>270198627</SettingID>
+        <SettingValue>0</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>Power management mode</SettingNameInfo>
+        <SettingID>274197361</SettingID>
+        <SettingValue>1</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>Enable FXAA</SettingNameInfo>
+        <SettingID>276089202</SettingID>
+        <SettingValue>0</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>Antialiasing - Gamma correction</SettingNameInfo>
+        <SettingID>276652957</SettingID>
+        <SettingValue>0</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>Antialiasing - Mode</SettingNameInfo>
+        <SettingID>276757595</SettingID>
+        <SettingValue>1</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>VRR requested state</SettingNameInfo>
+        <SettingID>278196727</SettingID>
+        <SettingValue>0</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>G-SYNC</SettingNameInfo>
+        <SettingID>279476687</SettingID>
+        <SettingValue>1</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>Enable G-SYNC globally</SettingNameInfo>
+        <SettingID>294973784</SettingID>
+        <SettingValue>0</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>Event Log Tmon Severity Threshold</SettingNameInfo>
+        <SettingID>539527361</SettingID>
+        <SettingValue>0</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>OpenGL default swap interval</SettingNameInfo>
+        <SettingID>543843714</SettingID>
+        <SettingValue>4026531840</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>High level control of the rendering quality on OpenGL</SettingNameInfo>
+        <SettingID>544832876</SettingID>
+        <SettingValue>20</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>Antialiasing - Line gamma</SettingNameInfo>
+        <SettingID>545898348</SettingID>
+        <SettingValue>0</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>Maximum frames allowed</SettingNameInfo>
+        <SettingID>546199011</SettingID>
+        <SettingValue>1</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>Event Log Severity Threshold</SettingNameInfo>
+        <SettingID>547222078</SettingID>
+        <SettingValue>0</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>Preferred OpenGL GPU</SettingNameInfo>
+        <SettingID>550564838</SettingID>
+        <SettingValue>id,2.0:250410DE,00000700,GF - (368,6,161,12288) @ (0)</SettingValue>
+        <ValueType>String</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo />
+        <SettingID>550870746</SettingID>
+        <SettingValue>1</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo />
+        <SettingID>552789362</SettingID>
+        <SettingValue>1</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo>Triple buffering</SettingNameInfo>
+        <SettingID>553505273</SettingID>
+        <SettingValue>0</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+      <ProfileSetting>
+        <SettingNameInfo />
+        <SettingID>1343646814</SettingID>
+        <SettingValue>0</SettingValue>
+        <ValueType>Dword</ValueType>
+      </ProfileSetting>
+    </Settings>
+  </Profile>
+</ArrayOfProfile>
+'@
+}
+
+function Import-BMEmbeddedRegContent {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$RegContent,
+
+        [Parameter(Mandatory = $true)]
+        [string]$PresetName
+    )
+
+    $tempRegFile = Join-Path $env:TEMP ("BM_NVIDIA_" + [guid]::NewGuid().ToString() + ".reg")
+
+    try {
+        Set-Content -Path $tempRegFile -Value $RegContent -Encoding Unicode
+
+        & reg.exe import "$tempRegFile" | Out-Null
+
+        if ($LASTEXITCODE -ne 0) {
+            throw "O Windows retornou erro ao importar o arquivo .reg temporario."
+        }
+
+        Show-BMInfoMessage `
+            -Message "Preset NVIDIA aplicado com sucesso:`n$PresetName`n`nRecomendacao: execute o botao 'Reset NVIDIA' ou reinicie o computador para garantir a recarga completa do driver." `
+            -Title "BM InfoTech - NVIDIA" `
+            -Icon ([System.Windows.MessageBoxImage]::Information)
+    }
+    finally {
+        Remove-Item $tempRegFile -Force -ErrorAction SilentlyContinue
+    }
+}
+
+function New-BMTempNipFile {
+    $tempNipFile = Join-Path $env:TEMP ("BM_Profile_" + [guid]::NewGuid().ToString() + ".nip")
+    Set-Content -Path $tempNipFile -Value (Get-BMEmbeddedNipProfile) -Encoding ASCII
+    return $tempNipFile
+}
+
+function Get-BMTempNvidiaProfileInspector {
+    $url = "https://raw.githubusercontent.com/julianoaugustoleite/winutil/main/npi/nvidiaProfileInspector.exe"
+    $tempExe = Join-Path $env:TEMP ("nvidiaProfileInspector_" + [guid]::NewGuid().ToString() + ".exe")
+
+    Invoke-WebRequest -Uri $url -OutFile $tempExe -UseBasicParsing
+
+    if (!(Test-Path $tempExe)) {
+        throw "Nao foi possivel baixar o NVIDIA Profile Inspector."
+    }
+
+    return $tempExe
+}
+
