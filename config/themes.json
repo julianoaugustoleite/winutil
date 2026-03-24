@@ -18,7 +18,7 @@
         "TabContentMargin":       "5",
         "TabButtonFontSize":      "14",
         "TabButtonWidth":         "110",
-        "TabButtonHeight":        "26",
+        "TabButtonHeight":        "28",
         "TabRowHeightInPixels":   "50",
         "ToolTipWidth":         "300",
         "IconFontSize":     "14",
@@ -29,7 +29,7 @@
         "ButtonFontSize":   "12",
         "ButtonFontFamily": "Arial",
         "ButtonWidth":      "200",
-        "ButtonHeight":     "25",
+        "ButtonHeight":     "28",
         "ConfigTabButtonFontSize":   "14",
         "ConfigUpdateButtonFontSize":   "14",
         "SearchBarWidth":               "200",
@@ -38,8 +38,8 @@
         "SearchBarClearButtonFontSize": "14",
         "CheckboxMouseOverColor": "#999999",
         "ButtonBorderThickness":  "1",
-        "ButtonMargin":  "1",
-        "ButtonCornerRadius": "2"
+        "ButtonMargin":  "2",
+        "ButtonCornerRadius": "8"
     },
     "Light": {
         "AppInstallUnselectedColor": "#F7F7F7",
@@ -84,44 +84,53 @@
 
     },
     "Dark": {
-        "AppInstallUnselectedColor": "#232629",
-        "AppInstallHighlightedColor": "#3C3C3C",
-        "AppInstallSelectedColor": "#4C4C4C",
-        "AppInstallOverlayBackgroundColor":"#2E3135",
-        "ComboBoxForegroundColor":  "#F7F7F7",
-        "ComboBoxBackgroundColor":  "#1E3747",
-        "LabelboxForegroundColor":  "#5bdcff",
-        "MainForegroundColor":  "#F7F7F7",
-        "MainBackgroundColor":  "#232629",
-        "LabelBackgroundColor":  "#232629",
-        "LinkForegroundColor":  "#add8e6",
-        "LinkHoverForegroundColor":  "#F7F7F7",
-        "ScrollBarBackgroundColor": "#2E3135",
-        "ScrollBarHoverColor": "#3B4252",
-        "ScrollBarDraggingColor": "#5E81AC",
+    "AppInstallUnselectedColor": "#161D26",
+    "AppInstallHighlightedColor": "#1C2733",
+    "AppInstallSelectedColor": "#243444",
+    "AppInstallOverlayBackgroundColor":"#0B1218",
 
-        "ProgressBarForegroundColor": "#222222",
-        "ProgressBarBackgroundColor": "Transparent",
-        "ProgressBarTextColor": "#232629",
-        "ButtonInstallBackgroundColor":  "#222222",
-        "ButtonTweaksBackgroundColor":  "#333333",
-        "ButtonConfigBackgroundColor":  "#444444",
-        "ButtonUpdatesBackgroundColor":  "#555555",
-        "ButtonWin11ISOBackgroundColor": "#666666",
-        "ButtonInstallForegroundColor":  "#F7F7F7",
-        "ButtonTweaksForegroundColor":  "#F7F7F7",
-        "ButtonConfigForegroundColor":  "#F7F7F7",
-        "ButtonUpdatesForegroundColor":  "#F7F7F7",
-        "ButtonWin11ISOForegroundColor": "#F7F7F7",
-        "ButtonBackgroundColor":  "#1E3747",
-        "ButtonBackgroundPressedColor":  "#F7F7F7",
-        "ButtonBackgroundMouseoverColor":  "#3B4252",
-        "ButtonBackgroundSelectedColor":  "#5E81AC",
-        "ButtonForegroundColor":  "#F7F7F7",
-        "ToggleButtonOnColor": "#2e77ff",
-        "ToggleButtonOffColor": "#707070",
-        "ToolTipBackgroundColor": "#2F373D",
-        "BorderColor": "#2F373D",
-        "BorderOpacity": "0.2"
-    }
+    "ComboBoxForegroundColor":  "#EAF2F8",
+    "ComboBoxBackgroundColor":  "#131B23",
+
+    "LabelboxForegroundColor":  "#4CB3FF",
+    "MainForegroundColor":  "#EAF2F8",
+    "MainBackgroundColor":  "#0B1218",
+    "LabelBackgroundColor":  "#0B1218",
+
+    "LinkForegroundColor":  "#4CB3FF",
+    "LinkHoverForegroundColor":  "#FFFFFF",
+
+    "ScrollBarBackgroundColor": "#131B23",
+    "ScrollBarHoverColor": "#1F2C39",
+    "ScrollBarDraggingColor": "#4CB3FF",
+
+    "ProgressBarForegroundColor": "#4CB3FF",
+    "ProgressBarBackgroundColor": "Transparent",
+    "ProgressBarTextColor": "#EAF2F8",
+
+    "ButtonInstallBackgroundColor":  "#16212C",
+    "ButtonTweaksBackgroundColor":  "#16212C",
+    "ButtonConfigBackgroundColor":  "#16212C",
+    "ButtonUpdatesBackgroundColor":  "#16212C",
+    "ButtonWin11ISOBackgroundColor": "#16212C",
+
+    "ButtonInstallForegroundColor":  "#EAF2F8",
+    "ButtonTweaksForegroundColor":  "#EAF2F8",
+    "ButtonConfigForegroundColor":  "#EAF2F8",
+    "ButtonUpdatesForegroundColor":  "#EAF2F8",
+    "ButtonWin11ISOForegroundColor": "#EAF2F8",
+
+    "ButtonBackgroundColor":  "#16212C",
+    "ButtonBackgroundPressedColor":  "#101820",
+    "ButtonBackgroundMouseoverColor":  "#1F2C39",
+    "ButtonBackgroundSelectedColor":  "#2B4660",
+    "ButtonForegroundColor":  "#EAF2F8",
+
+    "ToggleButtonOnColor": "#4CB3FF",
+    "ToggleButtonOffColor": "#48545F",
+
+    "ToolTipBackgroundColor": "#131B23",
+    "BorderColor": "#233241",
+    "BorderOpacity": "0.45"
+}
 }
