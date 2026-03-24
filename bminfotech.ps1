@@ -16398,9 +16398,10 @@ $sync["AboutMenuItem"].Add_Click({
     $authorInfo = @"
 BM Infotech Windows Toolbox
 
-Empresa  : <a href="https://www.bminfotech.com.br">www.bminfotech.com.br</a>
-GitHub   : <a href="https://github.com/julianoaugustoleite/winutil">julianoaugustoleite/winutil</a>
-Versao   : $($sync.version)
+Site: <a href="https://www.bminfotech.com.br">www.bminfotech.com.br</a>
+Instagram: <a href="https://www.instagram.com/brunomonteirobm_/">@brunomonteirobm_</a>
+Discord: <a href="https://discord.com/invite/3FRaPzpaVB/">brunomonteirobm_</a>
+Whatsapp: <a href="https://api.whatsapp.com/send?phone=5535991216211">+55(35)99121-6211</a>
 "@
     Show-CustomDialog -Title "Sobre a BM Infotech" -Message $authorInfo
 })
