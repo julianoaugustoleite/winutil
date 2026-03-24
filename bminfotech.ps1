@@ -5688,21 +5688,14 @@ function Get-BMEmbeddedRegSimple {
 @'
 Windows Registry Editor Version 5.00
 
-; --- Restaura GameDVR para o padr?o do Windows ---
+[HKEY_CURRENT_USER\System\GameConfigStore]
+"GameDVR_Enabled"=dword:00000000
+
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\GameDVR]
-"AllowGameDVR"=-
+"AllowGameDVR"=dword:00000000
 
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR]
-"AppCaptureEnabled"=dword:00000001
-
-; --- Restaura Prefetch e Superfetch para o padr?o (ativo para boot e apps) ---
-[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters]
-"EnablePrefetcher"=dword:00000003
-"EnableSuperfetch"=dword:00000003
-
-; --- Remove o valor DisableDynamicPstate mantendo o restante do driver intacto ---
-[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0000]
-"DisableDynamicPstate"=-
+"AppCaptureEnabled"=dword:00000000
 '@
 }
 
