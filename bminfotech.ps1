@@ -5703,7 +5703,33 @@ function Get-BMEmbeddedRegRemove {
 @'
 Windows Registry Editor Version 5.00
 
-; Remove tweaks de GPU adicionados manualmente
+; Remove todos os tweaks do Full.reg
+
+[HKEY_CURRENT_USER\Software\Microsoft\GameBar]
+"ShowStartupPanel"=-
+"GamePanelStartupTipIndex"=-
+"AllowAutoGameMode"=-
+"AutoGameModeEnabled"=-
+"UseNexusForGameBarEnabled"=-
+
+[HKEY_CURRENT_USER\System\GameConfigStore]
+"GameDVR_Enabled"=-
+"GameDVR_FSEBehaviorMode"=-
+"GameDVR_FSEBehavior"=-
+"GameDVR_HonorUserFSEBehaviorMode"=-
+"GameDVR_DXGIHonorFSEWindowsCompatible"=-
+"GameDVR_EFSEFeatureFlags"=-
+"GameDVR_DSEBehavior"=-
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\GameDVR]
+"AllowGameDVR"=-
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR]
+"AppCaptureEnabled"=-
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters]
+"EnablePrefetcher"=-
+"EnableSuperfetch"=-
 
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0000]
 "DisableDynamicPstate"=-
