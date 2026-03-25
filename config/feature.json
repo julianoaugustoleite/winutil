@@ -123,6 +123,7 @@
     "panel": "1",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 3,
     "function": "Invoke-WPFPanelAutologin",
   },
   "WPFFixesUpdate": {
@@ -131,6 +132,7 @@
     "panel": "1",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 2,
     "function": "Invoke-WPFFixesUpdate",
   },
   "WPFFixesNetwork": {
@@ -140,6 +142,7 @@
     "Type": "Button",
     "ButtonWidth": "300",
     "function": "Invoke-WPFFixesNetwork",
+    "SortOrder": 1,
   },
   "WPFPanelDISM": {
     "Content": "System Corruption Scan",
@@ -147,6 +150,7 @@
     "panel": "1",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 4,
     "function": "Invoke-WPFSystemRepair",
   },
   "WPFFixesWinget": {
@@ -155,8 +159,40 @@
     "panel": "1",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 4,
     "function": "Invoke-WPFFixesWinget",
   },
+
+  "WPFPrintFix0011b": {
+  "Content": "Fix 0x0000011b",
+  "category": "2__Fixes",
+  "panel": "1",
+  "Type": "Button",
+  "ButtonWidth": "300",
+  "SortOrder": 6,
+  "function": "Invoke-WPFPrintFix0011b"
+},
+
+"WPFPrintFix25022503": {
+  "Content": "Fix 2502 - 2503",
+  "category": "2__Fixes",
+  "panel": "1",
+  "Type": "Button",
+  "ButtonWidth": "300",
+  "SortOrder": 7,
+  "function": "Invoke-WPFPrintFix25022503"
+},
+
+"WPFPrintResetTool": {
+  "Content": "Reset DNS",
+  "category": "2__Fixes",
+  "panel": "1",
+  "Type": "Button",
+  "ButtonWidth": "300",
+  "SortOrder": 8,
+  "function": "Invoke-WPFPrintResetTool"
+},
+
   "WPFPanelControl": {
     "Content": "Control Panel",
     "category": "Legacy Windows Panels",

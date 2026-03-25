@@ -1,0 +1,180 @@
+function Show-BMFixMessage {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Message,
+
+        [string]$Title = "BM InfoTech",
+
+        [System.Windows.MessageBoxImage]$Icon = [System.Windows.MessageBoxImage]::Information
+    )
+
+    [System.Windows.MessageBox]::Show(
+        $Message,
+        $Title,
+        [System.Windows.MessageBoxButton]::OK,
+        $Icon
+    ) | Out-Null
+}
+
+function Confirm-BMFixAction {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Message,
+
+        [string]$Title = "BM InfoTech"
+    )
+
+    $result = [System.Windows.MessageBox]::Show(
+        $Message,
+        $Title,
+        [System.Windows.MessageBoxButton]::YesNo,
+        [System.Windows.MessageBoxImage]::Question
+    )
+
+    return ($result -eq [System.Windows.MessageBoxResult]::Yes)
+}
+
+function Get-BMEmbeddedFix0011bReg {
+@'
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Print]
+"RpcAuthnLevelPrivacyEnabled"=dword:00000000
+'@
+}
+
+function Get-BMEmbeddedFix25022503Reg {
+@'
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System]
+"EnableLUA"=dword:00000000
+'@
+}
+
+function Import-BMEmbeddedRegFix {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$RegContent,
+
+        [Parameter(Mandatory = $true)]
+        [string]$FixName
+    )
+
+    $tempRegFile = Join-Path $env:TEMP ("BM_FIX_" + [guid]::NewGuid().ToString() + ".reg")
+
+    try {
+        Set-Content -Path $tempRegFile -Value $RegContent -Encoding Unicode
+
+        & reg.exe import "$tempRegFile" | Out-Null
+
+        if ($LASTEXITCODE -ne 0) {
+            throw "O Windows retornou erro ao importar o arquivo .reg temporario."
+        }
+
+        Show-BMFixMessage `
+            -Message "$FixName aplicado com sucesso." `
+            -Title "BM InfoTech - Fix" `
+            -Icon ([System.Windows.MessageBoxImage]::Information)
+    }
+    finally {
+        Remove-Item $tempRegFile -Force -ErrorAction SilentlyContinue
+    }
+}
+
+function Invoke-WPFPrintFix0011b {
+    try {
+        $confirmMessage = @"
+Voce esta prestes a aplicar o fix 0x0000011b.
+
+Deseja continuar?
+"@
+
+        if (-not (Confirm-BMFixAction -Message $confirmMessage -Title "BM InfoTech - Confirmar fix")) {
+            return
+        }
+
+        Import-BMEmbeddedRegFix `
+            -RegContent (Get-BMEmbeddedFix0011bReg) `
+            -FixName "Fix 0x0000011b"
+    }
+    catch {
+        Show-BMFixMessage `
+            -Message "Falha ao aplicar o Fix 0x0000011b.`n`nDetalhes:`n$($_.Exception.Message)" `
+            -Title "BM InfoTech - Erro" `
+            -Icon ([System.Windows.MessageBoxImage]::Error)
+    }
+}
+
+function Invoke-WPFPrintFix25022503 {
+    try {
+        $confirmMessage = @"
+Voce esta prestes a aplicar o fix 2502 - 2503.
+
+Deseja continuar?
+"@
+
+        if (-not (Confirm-BMFixAction -Message $confirmMessage -Title "BM InfoTech - Confirmar fix")) {
+            return
+        }
+
+        Import-BMEmbeddedRegFix `
+            -RegContent (Get-BMEmbeddedFix25022503Reg) `
+            -FixName "Fix 2502 - 2503"
+    }
+    catch {
+        Show-BMFixMessage `
+            -Message "Falha ao aplicar o Fix 2502 - 2503.`n`nDetalhes:`n$($_.Exception.Message)" `
+            -Title "BM InfoTech - Erro" `
+            -Icon ([System.Windows.MessageBoxImage]::Error)
+    }
+}
+
+function Get-BMTempResetTool {
+    $url = "COLE_AQUI_A_URL_DO_EXE"
+    $tempExe = Join-Path $env:TEMP ("BM_ResetDNS_" + [guid]::NewGuid().ToString() + ".exe")
+
+    Invoke-WebRequest -Uri $url -OutFile $tempExe -UseBasicParsing
+
+    if (!(Test-Path $tempExe)) {
+        throw "Nao foi possivel baixar a ferramenta de reset DNS."
+    }
+
+    return $tempExe
+}
+
+function Invoke-WPFPrintResetTool {
+    $tempExe = $null
+
+    try {
+        $confirmMessage = @"
+Voce esta prestes a executar a ferramenta de reset DNS.
+
+Deseja continuar?
+"@
+
+        if (-not (Confirm-BMFixAction -Message $confirmMessage -Title "BM InfoTech - Confirmar reset DNS")) {
+            return
+        }
+
+        $tempExe = Get-BMTempResetTool
+
+        Start-Process -FilePath $tempExe -Wait
+
+        Show-BMFixMessage `
+            -Message "Ferramenta de reset DNS executada com sucesso." `
+            -Title "BM InfoTech - Reset DNS" `
+            -Icon ([System.Windows.MessageBoxImage]::Information)
+    }
+    catch {
+        Show-BMFixMessage `
+            -Message "Falha ao executar a ferramenta de reset DNS.`n`nDetalhes:`n$($_.Exception.Message)" `
+            -Title "BM InfoTech - Erro" `
+            -Icon ([System.Windows.MessageBoxImage]::Error)
+    }
+    finally {
+        if ($tempExe) {
+            Remove-Item $tempExe -Force -ErrorAction SilentlyContinue
+        }
+    }
+}

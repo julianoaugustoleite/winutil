@@ -3,7 +3,7 @@
     Author         : BM Infotech
     Runspace Author: @brunomonteirobm_
     GitHub         : https://www.bminfotech.com.br/
-    Version        : 26.03.24
+    Version        : 26.03.25
 #>
 
 param (
@@ -74,7 +74,7 @@ Add-Type -AssemblyName System.Windows.Forms
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
 $global:BMWinUtilBasePath = $PSScriptRoot
-$sync.version = "26.03.24"
+$sync.version = "26.03.25"
 $sync.configs = @{}
 $sync.Buttons = [System.Collections.Generic.List[PSObject]]::new()
 $sync.preferences = @{}
@@ -4709,6 +4709,186 @@ function Invoke-WPFFeatureInstall {
         Write-Host "---   Features are Installed    ---"
         Write-Host "---  A Reboot may be required   ---"
         Write-Host "==================================="
+    }
+}
+function Show-BMFixMessage {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Message,
+
+        [string]$Title = "BM InfoTech",
+
+        [System.Windows.MessageBoxImage]$Icon = [System.Windows.MessageBoxImage]::Information
+    )
+
+    [System.Windows.MessageBox]::Show(
+        $Message,
+        $Title,
+        [System.Windows.MessageBoxButton]::OK,
+        $Icon
+    ) | Out-Null
+}
+
+function Confirm-BMFixAction {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Message,
+
+        [string]$Title = "BM InfoTech"
+    )
+
+    $result = [System.Windows.MessageBox]::Show(
+        $Message,
+        $Title,
+        [System.Windows.MessageBoxButton]::YesNo,
+        [System.Windows.MessageBoxImage]::Question
+    )
+
+    return ($result -eq [System.Windows.MessageBoxResult]::Yes)
+}
+
+function Get-BMEmbeddedFix0011bReg {
+@'
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Print]
+"RpcAuthnLevelPrivacyEnabled"=dword:00000000
+'@
+}
+
+function Get-BMEmbeddedFix25022503Reg {
+@'
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System]
+"EnableLUA"=dword:00000000
+'@
+}
+
+function Import-BMEmbeddedRegFix {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$RegContent,
+
+        [Parameter(Mandatory = $true)]
+        [string]$FixName
+    )
+
+    $tempRegFile = Join-Path $env:TEMP ("BM_FIX_" + [guid]::NewGuid().ToString() + ".reg")
+
+    try {
+        Set-Content -Path $tempRegFile -Value $RegContent -Encoding Unicode
+
+        & reg.exe import "$tempRegFile" | Out-Null
+
+        if ($LASTEXITCODE -ne 0) {
+            throw "O Windows retornou erro ao importar o arquivo .reg temporario."
+        }
+
+        Show-BMFixMessage `
+            -Message "$FixName aplicado com sucesso." `
+            -Title "BM InfoTech - Fix" `
+            -Icon ([System.Windows.MessageBoxImage]::Information)
+    }
+    finally {
+        Remove-Item $tempRegFile -Force -ErrorAction SilentlyContinue
+    }
+}
+
+function Invoke-WPFPrintFix0011b {
+    try {
+        $confirmMessage = @"
+Voce esta prestes a aplicar o fix 0x0000011b.
+
+Deseja continuar?
+"@
+
+        if (-not (Confirm-BMFixAction -Message $confirmMessage -Title "BM InfoTech - Confirmar fix")) {
+            return
+        }
+
+        Import-BMEmbeddedRegFix `
+            -RegContent (Get-BMEmbeddedFix0011bReg) `
+            -FixName "Fix 0x0000011b"
+    }
+    catch {
+        Show-BMFixMessage `
+            -Message "Falha ao aplicar o Fix 0x0000011b.`n`nDetalhes:`n$($_.Exception.Message)" `
+            -Title "BM InfoTech - Erro" `
+            -Icon ([System.Windows.MessageBoxImage]::Error)
+    }
+}
+
+function Invoke-WPFPrintFix25022503 {
+    try {
+        $confirmMessage = @"
+Voce esta prestes a aplicar o fix 2502 - 2503.
+
+Deseja continuar?
+"@
+
+        if (-not (Confirm-BMFixAction -Message $confirmMessage -Title "BM InfoTech - Confirmar fix")) {
+            return
+        }
+
+        Import-BMEmbeddedRegFix `
+            -RegContent (Get-BMEmbeddedFix25022503Reg) `
+            -FixName "Fix 2502 - 2503"
+    }
+    catch {
+        Show-BMFixMessage `
+            -Message "Falha ao aplicar o Fix 2502 - 2503.`n`nDetalhes:`n$($_.Exception.Message)" `
+            -Title "BM InfoTech - Erro" `
+            -Icon ([System.Windows.MessageBoxImage]::Error)
+    }
+}
+
+function Get-BMTempResetTool {
+    $url = "COLE_AQUI_A_URL_DO_EXE"
+    $tempExe = Join-Path $env:TEMP ("BM_ResetDNS_" + [guid]::NewGuid().ToString() + ".exe")
+
+    Invoke-WebRequest -Uri $url -OutFile $tempExe -UseBasicParsing
+
+    if (!(Test-Path $tempExe)) {
+        throw "Nao foi possivel baixar a ferramenta de reset DNS."
+    }
+
+    return $tempExe
+}
+
+function Invoke-WPFPrintResetTool {
+    $tempExe = $null
+
+    try {
+        $confirmMessage = @"
+Voce esta prestes a executar a ferramenta de reset DNS.
+
+Deseja continuar?
+"@
+
+        if (-not (Confirm-BMFixAction -Message $confirmMessage -Title "BM InfoTech - Confirmar reset DNS")) {
+            return
+        }
+
+        $tempExe = Get-BMTempResetTool
+
+        Start-Process -FilePath $tempExe -Wait
+
+        Show-BMFixMessage `
+            -Message "Ferramenta de reset DNS executada com sucesso." `
+            -Title "BM InfoTech - Reset DNS" `
+            -Icon ([System.Windows.MessageBoxImage]::Information)
+    }
+    catch {
+        Show-BMFixMessage `
+            -Message "Falha ao executar a ferramenta de reset DNS.`n`nDetalhes:`n$($_.Exception.Message)" `
+            -Title "BM InfoTech - Erro" `
+            -Icon ([System.Windows.MessageBoxImage]::Error)
+    }
+    finally {
+        if ($tempExe) {
+            Remove-Item $tempExe -Force -ErrorAction SilentlyContinue
+        }
     }
 }
 function Invoke-WPFFixesNetwork {
@@ -11061,6 +11241,7 @@ $sync.configs.feature = @'
     "panel": "1",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 3,
     "function": "Invoke-WPFPanelAutologin"
   },
   "WPFFixesUpdate": {
@@ -11069,6 +11250,7 @@ $sync.configs.feature = @'
     "panel": "1",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 2,
     "function": "Invoke-WPFFixesUpdate"
   },
   "WPFFixesNetwork": {
@@ -11077,7 +11259,8 @@ $sync.configs.feature = @'
     "panel": "1",
     "Type": "Button",
     "ButtonWidth": "300",
-    "function": "Invoke-WPFFixesNetwork"
+    "function": "Invoke-WPFFixesNetwork",
+    "SortOrder": 1
   },
   "WPFPanelDISM": {
     "Content": "System Corruption Scan",
@@ -11085,6 +11268,7 @@ $sync.configs.feature = @'
     "panel": "1",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 4,
     "function": "Invoke-WPFSystemRepair"
   },
   "WPFFixesWinget": {
@@ -11093,7 +11277,35 @@ $sync.configs.feature = @'
     "panel": "1",
     "Type": "Button",
     "ButtonWidth": "300",
+    "SortOrder": 4,
     "function": "Invoke-WPFFixesWinget"
+  },
+  "WPFPrintFix0011b": {
+    "Content": "Fix 0x0000011b",
+    "category": "2__Fixes",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "SortOrder": 6,
+    "function": "Invoke-WPFPrintFix0011b"
+  },
+  "WPFPrintFix25022503": {
+    "Content": "Fix 2502 - 2503",
+    "category": "2__Fixes",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "SortOrder": 7,
+    "function": "Invoke-WPFPrintFix25022503"
+  },
+  "WPFPrintResetTool": {
+    "Content": "Reset DNS",
+    "category": "2__Fixes",
+    "panel": "1",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "SortOrder": 8,
+    "function": "Invoke-WPFPrintResetTool"
   },
   "WPFPanelControl": {
     "Content": "Control Panel",
@@ -11365,7 +11577,7 @@ $sync.configs.themes = @'
     "ButtonUpdatesForegroundColor": "#EAF2F8",
     "ButtonWin11ISOForegroundColor": "#EAF2F8",
     "ButtonBackgroundColor": "#16212C",
-    "ButtonBackgroundPressedColor": "#101820",
+    "ButtonBackgroundPressedColor": "#4CB3FF",
     "ButtonBackgroundMouseoverColor": "#1F2C39",
     "ButtonBackgroundSelectedColor": "#2B4660",
     "ButtonForegroundColor": "#EAF2F8",
@@ -14861,14 +15073,14 @@ $inputXML = @'
                                 <!-- Your tweakspanel content goes here -->
                             </Grid>
 
-                            <Border Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="0" Style="{StaticResource BorderStyle}">
+                           <!--> <Border Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="0" Style="{StaticResource BorderStyle}">
                                 <StackPanel Background="{DynamicResource MainBackgroundColor}" Orientation="Horizontal" HorizontalAlignment="Left">
                                     <TextBlock Padding="10">
                                         Note: Hover over items to get a better description. Please be careful as many of these tweaks will heavily modify your system.
                                         <LineBreak/>Recommended selections are for normal users and if you are unsure do NOT check anything else!
                                     </TextBlock>
                                 </StackPanel>
-                            </Border>
+                            </Border> -->
                         </Grid>
                     </ScrollViewer>
                     <Border Grid.Row="1" Background="{DynamicResource MainBackgroundColor}" BorderBrush="{DynamicResource BorderColor}" BorderThickness="1" CornerRadius="5" HorizontalAlignment="Stretch" Padding="10">
