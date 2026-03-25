@@ -144,11 +144,16 @@ function Get-BMTempResetTool {
 }
 
 function Invoke-WPFPrintResetTool {
-    $tempExe = $null
-
     try {
         $confirmMessage = @"
-Voce esta prestes a executar a ferramenta de reset DNS.
+Voce esta prestes a executar a rotina de reset de rede e DNS.
+
+Essa acao ira:
+- renovar o IP da maquina
+- limpar a tabela ARP
+- recarregar nomes NetBIOS
+- limpar o cache DNS
+- registrar o DNS novamente
 
 Deseja continuar?
 "@
@@ -157,24 +162,23 @@ Deseja continuar?
             return
         }
 
-        $tempExe = Get-BMTempResetTool
-
-        Start-Process -FilePath $tempExe -Wait
+        ipconfig /release | Out-Null
+        ipconfig /renew | Out-Null
+        arp -d * | Out-Null
+        nbtstat -R | Out-Null
+        nbtstat -RR | Out-Null
+        ipconfig /flushdns | Out-Null
+        ipconfig /registerdns | Out-Null
 
         Show-BMFixMessage `
-            -Message "Ferramenta de reset DNS executada com sucesso." `
+            -Message "Reset de rede e DNS executado com sucesso." `
             -Title "BM InfoTech - Reset DNS" `
             -Icon ([System.Windows.MessageBoxImage]::Information)
     }
     catch {
         Show-BMFixMessage `
-            -Message "Falha ao executar a ferramenta de reset DNS.`n`nDetalhes:`n$($_.Exception.Message)" `
+            -Message "Falha ao executar o reset de rede e DNS.`n`nDetalhes:`n$($_.Exception.Message)" `
             -Title "BM InfoTech - Erro" `
             -Icon ([System.Windows.MessageBoxImage]::Error)
-    }
-    finally {
-        if ($tempExe) {
-            Remove-Item $tempExe -Force -ErrorAction SilentlyContinue
-        }
     }
 }
