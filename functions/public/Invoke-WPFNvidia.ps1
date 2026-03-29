@@ -654,7 +654,7 @@ function New-BMTempNipFile {
 
 function Get-BMTempNvidiaProfileInspector {
 
-    $url = "https://github.com/julianoaugustoleite/winutil/raw/main/npi/nvidiaProfileInspector.exe"
+    $url = "https://raw.githubusercontent.com/julianoaugustoleite/winutil/main/npi/nvidiaProfileInspector.exe"
 
     $tempDir = "C:\Temp"
     $tempExe = Join-Path $tempDir "nvidiaProfileInspector.exe"
