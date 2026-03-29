@@ -269,15 +269,7 @@ Deseja continuar?
             -Title "BM InfoTech - Erro NVIDIA" `
             -Icon ([System.Windows.MessageBoxImage]::Error)
     }
-    finally {
-        if ($npi) {
-            Remove-Item $npi -Force -ErrorAction SilentlyContinue
-        }
 
-        if ($nip) {
-            Remove-Item $nip -Force -ErrorAction SilentlyContinue
-        }
-    }
 }
 
 function Invoke-WPFNvidiaRegFull {
@@ -661,13 +653,27 @@ function New-BMTempNipFile {
 }
 
 function Get-BMTempNvidiaProfileInspector {
-    $url = "https://raw.githubusercontent.com/julianoaugustoleite/winutil/main/npi/nvidiaProfileInspector.exe"
-    $tempExe = Join-Path $env:TEMP ("nvidiaProfileInspector_" + [guid]::NewGuid().ToString() + ".exe")
 
+    $url = "https://github.com/julianoaugustoleite/winutil/raw/main/npi/nvidiaProfileInspector.exe"
+
+    $tempDir = "C:\Temp"
+    $tempExe = Join-Path $tempDir "nvidiaProfileInspector.exe"
+
+    if (!(Test-Path $tempDir)) {
+        New-Item -Path $tempDir -ItemType Directory | Out-Null
+    }
+
+    # FORÇA baixar sempre (sobrescreve)
     Invoke-WebRequest -Uri $url -OutFile $tempExe -UseBasicParsing
 
     if (!(Test-Path $tempExe)) {
-        throw "Nao foi possivel baixar o NVIDIA Profile Inspector."
+        throw "Falha ao baixar o NVIDIA Profile Inspector."
+    }
+
+    # valida tamanho mínimo (evita arquivo corrompido)
+    if ((Get-Item $tempExe).Length -lt 500000) {
+        Remove-Item $tempExe -Force
+        throw "Arquivo baixado corrompido."
     }
 
     return $tempExe
